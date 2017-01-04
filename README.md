@@ -33,15 +33,15 @@ curl -X POST https://jsonbin.org/blog \
 
 A private namespace URL "`_`" is used for jsonbin specific endpoints:
 
-* [`/_/help`](/_/help) This page.
-* [`/_/login`](/_/login) Auth with github.
-* [`/_/logout`](/_/logout) Clear your session.
-* [`/_/me`](/_/me) Your full profile.
-* [`/_/me/apikey`](/_/me/apikey) Your API key
-* [`/_/me/apikey`](/_/me/apikey) DELETE to revoke your current key
-* [`/_/me/username`](/_/me/username) Your username
-* [`/_/me/public`](/_/me/public) Your public paths
-* [`/_/me/:path`](/_/me/:path) Deep link to profile properties
+* [`/_/help`](https://jsonbin.org/_/help) This page.
+* [`/_/login`](https://jsonbin.org/_/login) Auth with github.
+* [`/_/logout`](https://jsonbin.org/_/logout) Clear your session.
+* [`/_/me`](https://jsonbin.org/_/me) Your full profile.
+* [`/_/me/apikey`](https://jsonbin.org/_/me/apikey) Your API key
+* [`/_/me/apikey`](https://jsonbin.org/_/me/apikey) DELETE to revoke your current key
+* [`/_/me/username`](https://jsonbin.org/_/me/username) Your username
+* [`/_/me/public`](https://jsonbin.org/_/me/public) Your public paths
+* [`/_/me/:path`](https://jsonbin.org/_/me/:path) Deep link to profile properties
 
 The following methods with your authorization header will access your data store:
 

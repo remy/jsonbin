@@ -9,8 +9,8 @@
 
 <h2 id="SYNOPSIS">SYNOPSIS</h2>
 
-<p>something-on-STDOUT | <code>jsonbin</code> [PATH]</p>
-<p>curl <code>jsonbin.org/:user/public</code></p>
+<p>curl <code>jsonbin.org/remy/blog</code></p>
+<p>something-on-STDOUT | <code>jsonbin</code></p>
 
 <p>First <a href="/_/login">sign in</a> to get an API key.</p>
 
@@ -66,6 +66,14 @@
 
 <pre><code>curl https://jsonbin.org/<strong>remy</strong>/blog</code></pre>
 
+<h2 id="example">Example usage</h2>
+
+<p>You can use jsonbin as a shared clipboard across machines. Creating an alias to upload <code>STDIN</code> via <code>curl</code> could be posted to a public URL:</p>
+
+<pre><code>alias jsonbin=`curl -H'authorization: token abcd-xyz-123' -F'content=@-' https://jsbin.org/clipboard`
+echo "foo" | jsbonbin
+</code></pre>
+
 <h2 id="BUGS">BUGS</h2>
 
 <p>This project lives at <a href="https://github.com/remy/jsonbin">github/jsonbin</a>. Please report bugs to <a href="https://github.com/remy/jsonbin/issues">github/jsonbin/issues</a>.
@@ -74,7 +82,7 @@
 <p>Remy Sharp <a href="mailto:remy@leftlogic.com">&lt;remy@leftlogic.com&gt;</a>
 
 <ol class="man-decor man-foot man foot">
-    <li class="tl"></li>
-    <li class="tc">January 2017</li>
-    <li class="tr">jsonbin(1)</li>
-  </ol>
+  <li class="tl"></li>
+  <li class="tc">January 2017</li>
+  <li class="tr">jsonbin(1)</li>
+</ol>
