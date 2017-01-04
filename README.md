@@ -5,7 +5,6 @@ jsonbin.org - A personal JSON store as a RESTful service
 ## SYNOPSIS
 
 ```
-$ something-on-STDOUT | jsonbin [PATH]
 $ curl jsonbin.org/:user/public
 ```
 
