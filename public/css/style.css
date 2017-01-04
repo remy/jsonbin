@@ -1,0 +1,47 @@
+* {
+  box-model: border-box;
+  font-family: courier;
+}
+
+html {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+
+main {
+  padding-top: 10vh;
+}
+
+a {
+  color: #424242;
+}
+
+p {
+  color: #757575;
+}
+
+footer {
+  font-size: 80%
+}
+
+body {
+  height: 100%;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex-grow: 1;
+  /* height: 100%; */
+}
+
+footer {
+  /* flex-basis: auto; */
+}

@@ -1,0 +1,39 @@
+{
+  "name": "store",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "now": {
+    "alias": "jsonbin.org"
+  },
+  "scripts": {
+    "now-start": "NODE_ENV=production node lib/index.js",
+    "start": "NODE_ENV=dev nodemon lib/index.js -w lib",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "compression": "^1.6.2",
+    "connect-mongo": "^1.3.2",
+    "cookie-parser": "^1.4.3",
+    "dotenv": "^2.0.0",
+    "express": "^4.14.0",
+    "express-hbs": "^1.0.3",
+    "express-session": "^1.14.2",
+    "file-type": "^4.0.0",
+    "http-status-codes": "^1.0.6",
+    "inline-log": "^1.0.4",
+    "lodash": "^4.17.4",
+    "moment": "^2.17.1",
+    "mongoose": "^4.7.5",
+    "multer": "^1.2.1",
+    "passport": "^0.3.2",
+    "passport-github2": "^0.1.10",
+    "undefsafe": "^1.2.0",
+    "uuid": "^3.0.1"
+  }
+}

@@ -1,0 +1,78 @@
+<div class='mp'>
+<ol class="man-decor man-head man head">
+  <li class="tl">jsonbin(1)</li>
+  <li class="tc">json RESTful store</li>
+  <li class="tr">jsonbin(1)</li>
+</ol>
+<h2 id="NAME">NAME</h2>
+<p><code>jsonbin.org</code> - A personal JSON store as a RESTful service</h1>
+
+<h2 id="SYNOPSIS">SYNOPSIS</h2>
+
+<p>something-on-STDOUT | <code>jsonbin</code> [PATH]</p>
+<p>curl <code>jsonbin.org/:user/public</code></p>
+
+<p>First <a href="/_/login">sign in</a> to get an API key.</p>
+
+<h2 id="DESCRIPTION">DESCRIPTION</h2>
+
+<p><code>jsonbin.org</code> is a personal key/value JSON store as a service. Protected behind authentication and API key requests, data is stored as JSON and can be deep linked. A permissioning model also allows specific paths to your store become public to share with others.</p>
+
+<p>The aim of the project is to provide a simplified data store for tinkerers.</p>
+
+<h2 id="auth">Authentication</h2>
+
+<p>By default all user store data is protected behind auth either via browser sign in, or an <code>authorization</code> token. The token is your <a href="/_/me/apikey"><code>apikey</code></a>. For example:</p>
+
+<pre><code>curl -X POST https://jsonbin.org/blog \
+     -H 'Authorization: token abcd-xyz-123' \
+     -d '{ url: "https://remysharp.com" }'</code></pre>
+
+<h2 id="endpoints">Endpoints</h2>
+
+<p>A private namespace URL "<code>_</code>" is used for jsonbin specific endpoints:
+<ul>
+  <li><a href="/_/help"><code>/_/help</code></a> This page.</li>
+  <li><a href="/_/login"><code>/_/login</code></a> Auth with github.</li>
+  <li><a href="/_/logout"><code>/_/logout</code></a> Clear your session.</li>
+  <li><a href="/_/me"><code>/_/me</code></a> Your full profile.</li>
+  <li><a href="/_/me/apikey"><code>/_/me/apikey</code></a> Your API key</li>
+  <li><a href="/_/me/apikey"><code>/_/me/apikey</code></a> DELETE to revoke your current key</li>
+  <li><a href="/_/me/username"><code>/_/me/username</code></a> Your username</li>
+  <li><a href="/_/me/public"><code>/_/me/public</code></a> Your public paths</li>
+  <li><a href="/_/me/"><code>/_/me/:path</code></a> Deep link to profile properties</li>
+</ul>
+
+<p>The following methods with your <code>authorization</code> header will access your data store:</p>
+
+<ul>
+  <li><code>GET</code> return given path mapped to a JSON path</li>
+  <li><code>POST</code> store the payload (supports JSON and files)</li>
+  <li><code>PATCH</code> merge the payload with the endpoint</li>
+  <li><code>DELETE</code> store path</li>
+</ul>
+
+<p>By default all endpoints are private, but you can modify a specific entry point to be public by default by changing the permissions:</p>
+
+<ul>
+  <li>PUT <code>/:path/_perms</code> make the <code>:path</code> public</li>
+  <li>DELETE <code>/:path/_perms</code> make <code>:path</code> private</li>
+  <li>GET <code>/:path/_perms</code> check permissions of <code>:path</code></li>
+</ul>
+
+<p>Public endpoints accept <code>GET</code> requests without the <code>authorization</code> header, but require your <a href="/_/me/username">username</a> as the root of the endpoint, such as:</p>
+
+<pre><code>curl https://jsonbin.org/<strong>remy</strong>/blog</code></pre>
+
+<h2 id="BUGS">BUGS</h2>
+
+<p>This project lives at <a href="https://github.com/remy/jsonbin">github/jsonbin</a>. Please report bugs to <a href="https://github.com/remy/jsonbin/issues">github/jsonbin/issues</a>.
+
+<h2 id="AUTHOR">AUTHOR</h2>
+<p>Remy Sharp <a href="mailto:remy@leftlogic.com">&lt;remy@leftlogic.com&gt;</a>
+
+<ol class="man-decor man-foot man foot">
+    <li class="tl"></li>
+    <li class="tc">January 2017</li>
+    <li class="tr">jsonbin(1)</li>
+  </ol>
