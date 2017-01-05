@@ -9,10 +9,10 @@
 
 <h2 id="SYNOPSIS">SYNOPSIS</h2>
 
-<p>curl <code>jsonbin.org/remy/blog</code></p>
+<p>curl <code>https://jsonbin.org/remy/blog</code></p>
 <!-- <p>something-on-STDOUT | <code>jsonbin</code></p> -->
 
-<p>First <a href="/_/login">sign in</a> to get an API key.</p>
+<p>To save data, you'll first need to <a href="/_/login">sign in</a> to get an API key.</p>
 
 <h2 id="DESCRIPTION">DESCRIPTION</h2>
 
@@ -70,7 +70,7 @@
 
 <p>You can use jsonbin as a shared clipboard across machines. Creating an alias to upload <code>STDIN</code> via <code>curl</code> could be posted to a public URL:</p>
 
-<pre><code>alias jsonbin=`curl -H'authorization: token abcd-xyz-123' -F'content=@-' https://jsbin.org/clipboard`
+<pre><code>alias jsonbin="curl -H'authorization: token abcd-xyz-123' -F'content=@-' https://jsonbin.org/clipboard"
 echo "foo" | jsbonbin
 </code></pre>
 

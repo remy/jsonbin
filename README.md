@@ -5,7 +5,7 @@ jsonbin.org - A personal JSON store as a RESTful service
 ## SYNOPSIS
 
 ```
-$ curl jsonbin.org/:user/public
+$ curl https://jsonbin.org/:user/public
 ```
 
 First [sign in](https://jsonbin.org/_/login) to get an API key.
