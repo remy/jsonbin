@@ -9,7 +9,7 @@
   },
   "scripts": {
     "now-start": "NODE_ENV=production node lib/index.js",
-    "post-version": "now --alias $npm_package_now_alias",
+    "postversion": "now --alias $npm_package_now_alias",
     "start": "NODE_ENV=dev nodemon lib/index.js -w lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
