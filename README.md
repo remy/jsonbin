@@ -1,67 +1,80 @@
-# NAME
+## NAME
 
-jsonbin.org - A personal JSON store as a RESTful service
+[`jsonbin.org`](https://jsonbin.org) - A personal JSON store as a RESTful service
 
 ## SYNOPSIS
 
-```
-$ curl https://jsonbin.org/:user/public
-```
+curl `https://jsonbin.org/remy/blog`
+<!-- <p>something-on-STDOUT | <code>jsonbin</code></p> -->
 
-First [sign in](https://jsonbin.org/_/login) to get an API key.
+To save data, you'll first need to <a href="/_/login">sign in</a> to get an API key.
 
 ## DESCRIPTION
 
-jsonbin.org is a personal key/value JSON store as a service. Protected behind authentication and API key requests, data is stored as JSON and can be deep linked. A permissioning model also allows specific paths to your store become public to share with others.
+`jsonbin.org` is a personal key/value JSON store as a service. Protected behind authentication and API key requests, data is stored as JSON and can be deep linked. A permissioning model also allows specific paths to your store to become public to share with others.
 
 The aim of the project is to provide a simplified data store for tinkerers.
 
-**Important**: jsonbin is currently in open beta. If you have questions, please get in touch.
+**Important:** jsonbin is currently in open beta. If you have questions, please get [in touch](#author).
 
-## AUTHENTICATION
+## Authentication
 
-By default all user store data is protected behind auth either via browser sign in, or an authorization token. The token is [your apikey](https://jsonbin.org/_/me/apikey). For example:
+By default all user store data is protected behind auth either via browser sign in, or an `authorization` token. The token is your [`apikey`](/_/me/apikey). For example:
 
 ```
-curl -X POST https://jsonbin.org/blog \
+curl -X POST https://jsonbin.org/remy/blog \
      -H 'Authorization: token abcd-xyz-123' \
      -d '{ url: "https://remysharp.com" }'
 ```
 
-## ENDPOINTS
+## Endpoints
 
 A private namespace URL "`_`" is used for jsonbin specific endpoints:
 
-* [`/_/help`](https://jsonbin.org/_/help) This page.
-* [`/_/login`](https://jsonbin.org/_/login) Auth with github.
-* [`/_/logout`](https://jsonbin.org/_/logout) Clear your session.
-* [`/_/me`](https://jsonbin.org/_/me) Your full profile.
-* [`/_/me/apikey`](https://jsonbin.org/_/me/apikey) Your API key
-* [`/_/me/apikey`](https://jsonbin.org/_/me/apikey) DELETE to revoke your current key
-* [`/_/me/username`](https://jsonbin.org/_/me/username) Your username
-* [`/_/me/public`](https://jsonbin.org/_/me/public) Your public paths
-* [`/_/me/:path`](https://jsonbin.org/_/me/:path) Deep link to profile properties
+* [`/_/help`](/_/help) This page.
+* [`/_/login`](/_/login) Auth with github.
+* [`/_/logout`](/_/logout) Clear your session.
+* [`/_/me`](/_/me) Your full profile.
+* [`/_/me/apikey`](/_/me/apikey) Your API key.
+* [`/_/me/apikey`](/_/me/apikey) DELETE to revoke your current key.
+* [`/_/me/username`](/_/me/username) Your username.
+* [`/_/me/public`](/_/me/public) Your public paths.
+* [`/_/me/:path`](/_/me/) Deep link to profile properties.
 
-The following methods with your authorization header will access your data store:
+The following methods with your `authorization` header will access your data store against `https://jsonbin.org/:username/`:
 
-* `GET` return given path mapped to a JSON path
-* `POST` store the payload (supports JSON and files)
-* `PATCH` merge the payload with the endpoint
-* `DELETE` store path
+* `GET` return given path mapped to a JSON path.
+* `POST` store the payload (supports JSON and files).
+* `PATCH` merge the payload with the endpoint.
+* `DELETE` store path.
 
 By default all endpoints are private, but you can modify a specific entry point to be public by default by changing the permissions:
 
-* `PUT /:path/_perms` make the :path public
-* `DELETE /:path/_perms` make :path private
-* `GET /:path/_perms` check permissions of :path
+* PUT `/:username/:path/_perms` make the `:path` public.
+* DELETE `/:username/:path/_perms` make `:path` private.
+* GET `/:username/:path/_perms` check permissions of `:path`.
 
-Public endpoints accept GET requests without the authorization header, but require your username as the root of the endpoint, such as:
+Public endpoints accept `GET` requests without the `authorization` header.
 
-    curl https://jsonbin.org/remy/blog
+## Example usage
+
+You can use jsonbin as a shared clipboard across machines. Creating an alias to upload `STDIN` via `curl` could be posted to a public URL:
+
+```
+alias jsonbin="curl -X 'POST' \
+      -H'authorization: token abcd-xyz-123' \
+      -F'content=@-' \
+      https://jsonbin.org/remy/clipboard"
+echo "foo" | jsbonbin
+```
+
+## BUGS
+
+This project lives at [github/jsonbin](https://github.com/remy/jsonbin). Please report bugs to [github/jsonbin/issues](https://github.com/remy/jsonbin/issues).
 
 ## AUTHOR
 
-Remy Sharp <remy@leftlogic.com>
+Remy Sharp &lt;[remy@leftlogic.com](mailto:remy@leftlogic.com)&gt;
 
 ## LICENSE
 

@@ -72,6 +72,44 @@ test('DELETE', t => {
   });
 });
 
+test('PATCH (object)', t => {
+  return request(user, {
+    method: 'post',
+    url: base + '/foo',
+    body: {
+      bar: 10,
+    }
+  }).then(() => {
+    return request(user, {
+      method: 'patch',
+      url: base + '/foo',
+      body: {
+        zoo: 11,
+      }
+    })
+  }).then(() => {
+    return request(user, { url: base + '/foo' }).then(body => {
+      t.deepEqual(body, {
+        zoo: 11,
+        bar: 10,
+      }, 'body matches');
+    });
+  });
+});
+
+test('PATCH (array)', t => {
+  return request(user, {
+    method: 'patch',
+    url: base + '/urls',
+    body: 'bar.com'
+  }).then(() => {
+    return request(user).then(body => {
+      console.log(body);
+      t.deepEqual(body, ['foo.com', 'bar.com'], 'body matches');
+    });
+  });
+});
+
 tap.tearDown(() => {
   return teardown();
 });

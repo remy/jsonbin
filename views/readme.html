@@ -4,82 +4,99 @@
   <li class="tc">json RESTful store</li>
   <li class="tr">jsonbin(1)</li>
 </ol>
-<h2 id="NAME">NAME</h2>
-<p><code>jsonbin.org</code> - A personal JSON store as a RESTful service</h1>
 
-<h2 id="SYNOPSIS">SYNOPSIS</h2>
+{{#marked}}
+## NAME
 
-<p>curl <code>https://jsonbin.org/remy/blog</code></p>
+`jsonbin.org` - A personal JSON store as a RESTful service
+
+## SYNOPSIS
+
+curl `https://jsonbin.org/remy/blog`
 <!-- <p>something-on-STDOUT | <code>jsonbin</code></p> -->
 
-<p>To save data, you'll first need to <a href="/_/login">sign in</a> to get an API key.</p>
+To save data, you'll first need to [sign in](https://jsonbin.org/_/login) to get an API key.
 
-<h2 id="DESCRIPTION">DESCRIPTION</h2>
+## DESCRIPTION
 
-<p><code>jsonbin.org</code> is a personal key/value JSON store as a service. Protected behind authentication and API key requests, data is stored as JSON and can be deep linked. A permissioning model also allows specific paths to your store to become public to share with others.</p>
+`jsonbin.org` is a personal key/value JSON store as a service. Protected behind authentication and API key requests, data is stored as JSON and can be deep linked. A permissioning model also allows specific paths to your store to become public to share with others.
 
-<p>The aim of the project is to provide a simplified data store for tinkerers.</p>
+The aim of the project is to provide a simplified data store for tinkerers.
 
-<p><strong>Important:</strong> jsonbin is currently in open beta. If you have questions, please get <a href="#AUTHOR">in touch</a>.</p>
+**Important:** jsonbin is currently in open beta. If you have questions, please get [in touch](#author).
 
-<h2 id="auth">Authentication</h2>
+## Authentication
 
-<p>By default all user store data is protected behind auth either via browser sign in, or an <code>authorization</code> token. The token is your <a href="/_/me/apikey"><code>apikey</code></a>. For example:</p>
+By default all user store data is protected behind auth either via browser sign in, or an `authorization` token. The token is your [`apikey`](https://jsonbin.org/_/me/apikey). For example:
 
-<pre><code>curl -X POST https://jsonbin.org/remy/blog \
+```
+curl -X POST https://jsonbin.org/remy/blog \
      -H 'Authorization: token abcd-xyz-123' \
-     -d '{ url: "https://remysharp.com" }'</code></pre>
+     -d '{ url: "https://remysharp.com" }'
+```
 
-<h2 id="endpoints">Endpoints</h2>
+## Endpoints
 
-<p>A private namespace URL "<code>_</code>" is used for jsonbin specific endpoints:
-<ul>
-  <li><a href="/_/help"><code>/_/help</code></a> This page.</li>
-  <li><a href="/_/login"><code>/_/login</code></a> Auth with github.</li>
-  <li><a href="/_/logout"><code>/_/logout</code></a> Clear your session.</li>
-  <li><a href="/_/me"><code>/_/me</code></a> Your full profile.</li>
-  <li><a href="/_/me/apikey"><code>/_/me/apikey</code></a> Your API key</li>
-  <li><a href="/_/me/apikey"><code>/_/me/apikey</code></a> DELETE to revoke your current key</li>
-  <li><a href="/_/me/username"><code>/_/me/username</code></a> Your username</li>
-  <li><a href="/_/me/public"><code>/_/me/public</code></a> Your public paths</li>
-  <li><a href="/_/me/"><code>/_/me/:path</code></a> Deep link to profile properties</li>
-</ul>
+A private namespace URL "`_`" is used for jsonbin specific endpoints:
 
-<p>The following methods with your <code>authorization</code> header will access your data store:</p>
+* [`/_/help`](https://jsonbin.org/_/help) This page.
+* [`/_/login`](https://jsonbin.org/_/login) Auth with github.
+* [`/_/logout`](https://jsonbin.org/_/logout) Clear your session.
+* [`/_/me`](https://jsonbin.org/_/me) Your full profile.
+* [`/_/me/apikey`](https://jsonbin.org/_/me/apikey) Your API key.
+* [`/_/me/apikey`](https://jsonbin.org/_/me/apikey) DELETE to revoke your current key.
+* [`/_/me/username`](https://jsonbin.org/_/me/username) Your username.
+* [`/_/me/public`](https://jsonbin.org/_/me/public) Your public paths.
+* [`/_/me/:path`](https://jsonbin.org/_/me/) Deep link to profile properties.
 
-<ul>
-  <li><code>GET</code> return given path mapped to a JSON path</li>
-  <li><code>POST</code> store the payload (supports JSON and files)</li>
-  <li><code>PATCH</code> merge the payload with the endpoint</li>
-  <li><code>DELETE</code> store path</li>
-</ul>
+The following methods with your `authorization` header will access your data store:
 
-<p>By default all endpoints are private, but you can modify a specific entry point to be public by default by changing the permissions:</p>
+* `GET` return given path mapped to a JSON path.
+* `POST` store the payload (supports JSON and files).
+* `PATCH` merge the payload with the endpoint.
+* `DELETE` store path.
 
-<ul>
-  <li>PUT <code>/:path/_perms</code> make the <code>:path</code> public</li>
-  <li>DELETE <code>/:path/_perms</code> make <code>:path</code> private</li>
-  <li>GET <code>/:path/_perms</code> check permissions of <code>:path</code></li>
-</ul>
+For example:
 
-<p>Public endpoints accept <code>GET</code> requests without the <code>authorization</code> header, but require your <a href="/_/me/username">username</a> as the root of the endpoint, such as:</p>
+```
+curl -X PATCH \
+     -H 'Authorization: token abcd-xyz-123' \
+     -d'{ "topic": "code" } \
+     https://jsonbin.org/:username/blog
+```
 
-<pre><code>curl https://jsonbin.org/<strong>remy</strong>/blog</code></pre>
+By default all endpoints are private, but you can modify a specific entry point to be public by default by changing the permissions:
 
-<h2 id="example">Example usage</h2>
+* PUT `/:username/:path/_perms` make the `:path` public.
+* DELETE `/:username/:path/_perms` make `:path` private.
+* GET `/:username/:path/_perms` check permissions of `:path`.
 
-<p>You can use jsonbin as a shared clipboard across machines. Creating an alias to upload <code>STDIN</code> via <code>curl</code> could be posted to a public URL:</p>
+Public endpoints accept `GET` requests without the `authorization` header.
 
-<pre><code>alias jsonbin="curl -H'authorization: token abcd-xyz-123' -F'content=@-' https://jsonbin.org/remy/clipboard"
+## Example usage
+
+You can use jsonbin as a shared clipboard across machines. Creating an alias to upload `STDIN` via `curl` could be posted to a public URL:
+
+```
+alias jsonbin="curl -X 'POST' \
+      -H'authorization: token abcd-xyz-123' \
+      -F'content=@-' \
+      https://jsonbin.org/remy/clipboard"
 echo "foo" | jsbonbin
-</code></pre>
+```
 
-<h2 id="BUGS">BUGS</h2>
+## BUGS
 
-<p>This project lives at <a href="https://github.com/remy/jsonbin">github/jsonbin</a>. Please report bugs to <a href="https://github.com/remy/jsonbin/issues">github/jsonbin/issues</a>.
+This project lives at [github/jsonbin](https://github.com/remy/jsonbin). Please report bugs to [github/jsonbin/issues](https://github.com/remy/jsonbin/issues).
 
-<h2 id="AUTHOR">AUTHOR</h2>
-<p>Remy Sharp <a href="mailto:remy@leftlogic.com">&lt;remy@leftlogic.com&gt;</a>
+## AUTHOR
+
+Remy Sharp &lt;[remy@leftlogic.com](mailto:remy@leftlogic.com)&gt;
+
+## LICENSE
+
+[MIT](https://rem.mit-license.org)
+{{/marked}}
 
 <ol class="man-decor man-foot man foot">
   <li class="tl"></li>
