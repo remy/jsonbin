@@ -48,3 +48,5 @@
       margin-left: 4ex;
     }
   }
+
+:target:before {content: '* ';position: absolute;margin-left: -14px;color: blueviolet;line-height: 22px;}
