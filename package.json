@@ -41,6 +41,7 @@
     "passport-github2": "^0.1.10",
     "serve-favicon": "^2.3.2",
     "undefsafe": "^1.2.0",
+    "universal-analytics": "^0.4.8",
     "uuid": "^3.0.1"
   },
   "devDependencies": {
