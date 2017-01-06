@@ -1,26 +1,10 @@
 const tap = require('tap');
-const _request = require('./request-then');
-const util = require('./user');
+const { setup, teardown, request, base } = require('./utils');
 const test = tap.test;
-const root = `http://localhost:${process.env.PORT}/test`; // "test" is the username
 let user = null;
 
-function request({ method = 'get', url = root, body = {} } = {}) {
-  return _request({
-    method,
-    body,
-    url,
-    json: true,
-    headers: {
-      authorization: `token ${user.apikey}`,
-    },
-  }).then(res => {
-    return res.body;
-  });
-}
-
 test('load user', t => {
-  return util.setup({
+  return setup({
     urls: ['foo.com']
   }).then(u => user = u).then(() => t.pass('user loaded'));
 });
@@ -35,7 +19,7 @@ tap.afterEach(done => {
 });
 
 test('GET (no slash)', t => {
-  return request().then(body => {
+  return request(user).then(body => {
     t.deepEqual(body, {
       urls: ['foo.com']
     }, 'body matches');
@@ -43,8 +27,8 @@ test('GET (no slash)', t => {
 });
 
 test('GET (with slash)', t => {
-  return request({
-    url: root + '/',
+  return request(user, {
+    url: base + '/',
   }).then(body => {
     t.deepEqual(body, {
       urls: ['foo.com']
@@ -53,14 +37,14 @@ test('GET (with slash)', t => {
 });
 
 test('POST', t => {
-  return request({
+  return request(user, {
     method: 'POST',
-    url: root + '/foo/bar',
+    url: base + '/foo/bar',
     body: {
       testing: true
     },
   }).then(() => {
-    return request().then(body => {
+    return request(user).then(body => {
       t.deepEqual(body, {
         urls: ['foo.com'],
         foo: {
@@ -77,11 +61,11 @@ test('POST', t => {
 });
 
 test('DELETE', t => {
-  return request({
+  return request(user, {
     method: 'delete',
-    url: root + '/urls',
+    url: base + '/urls',
   }).then(() => {
-    return request().then(body => {
+    return request(user).then(body => {
       t.deepEqual(body, {
       }, 'body matches');
     });
@@ -89,5 +73,5 @@ test('DELETE', t => {
 });
 
 tap.tearDown(() => {
-  return util.teardown();
+  return teardown();
 });
