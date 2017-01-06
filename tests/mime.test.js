@@ -57,6 +57,27 @@ test('x-www-form-urlencoded "bar.com"', t => {
   });
 });
 
+test('x-www-form-urlencoded "[]"', t => {
+  return request({
+    url,
+    method: 'PATCH',
+    body: '[]',
+    headers: getHeaders('application/x-www-form-urlencoded'),
+  }).then((res) => {
+    if (res.statusCode !== 200) {
+      return t.fail('non 200: ' + res.statusCode);
+    }
+
+    return request({
+      url,
+      json: true,
+      headers: getHeaders('application/json')
+    }).then(res => {
+      t.deepEqual(res.body, ['foo.com', []], 'body matches');
+    });
+  });
+});
+
 test(`x-www-form-urlencoded "{ "url": "bar.com" }"`, t => {
   return request({
     url,
