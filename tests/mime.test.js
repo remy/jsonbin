@@ -151,6 +151,27 @@ test(`json (non-strict) '"bar.com"'`, t => {
   });
 });
 
+test(`json (error) 'bar.com'`, t => {
+  return request({
+    url,
+    method: 'PATCH',
+    body: 'bar.com',
+    headers: getHeaders('application/json'),
+  }).then((res) => {
+    t.equal(res.statusCode, 500, 'errors when invalid json sent');
+
+    return request({
+      url,
+      json: true,
+      headers: getHeaders('text/plain')
+    }).then(res => {
+      t.deepEqual(res.body, [
+        'foo.com',
+      ], 'body remained unchanged');
+    });
+  });
+});
+
 
 
 
