@@ -65,7 +65,7 @@ alias jsonbin="curl -X 'POST' \
       -H'authorization: token abcd-xyz-123' \
       -F'content=@-' \
       https://jsonbin.org/remy/clipboard"
-echo "foo" | jsbonbin
+echo "foo" | jsonbin
 ```
 
 ## BUGS
