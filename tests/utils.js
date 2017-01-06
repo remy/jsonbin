@@ -15,6 +15,7 @@ module.exports = {
   teardown,
   request,
   base,
+  _request,
 };
 
 function request(user, {

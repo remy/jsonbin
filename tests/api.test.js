@@ -1,5 +1,5 @@
 const tap = require('tap');
-const { setup, teardown, request, base } = require('./utils');
+const { setup, teardown, request, base, _request } = require('./utils');
 const test = tap.test;
 let user = null;
 
@@ -120,6 +120,21 @@ test('PATCH (array)', t => {
     });
   });
 });
+
+test('permissions', t => {
+  return request(user, {
+    method: 'put',
+    url: base + '/urls/_perms',
+  }).then(() => {
+    return _request({
+      url: base + '/urls',
+      json: true
+    }).then(res => {
+      t.deepEqual(res.body, ['foo.com'], 'body matches');
+    });
+  });
+});
+
 
 tap.tearDown(() => {
   return teardown();
