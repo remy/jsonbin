@@ -16,7 +16,7 @@
 
 <h2 id="DESCRIPTION">DESCRIPTION</h2>
 
-<p><code>jsonbin.org</code> is a personal key/value JSON store as a service. Protected behind authentication and API key requests, data is stored as JSON and can be deep linked. A permissioning model also allows specific paths to your store become public to share with others.</p>
+<p><code>jsonbin.org</code> is a personal key/value JSON store as a service. Protected behind authentication and API key requests, data is stored as JSON and can be deep linked. A permissioning model also allows specific paths to your store to become public to share with others.</p>
 
 <p>The aim of the project is to provide a simplified data store for tinkerers.</p>
 
@@ -26,7 +26,7 @@
 
 <p>By default all user store data is protected behind auth either via browser sign in, or an <code>authorization</code> token. The token is your <a href="/_/me/apikey"><code>apikey</code></a>. For example:</p>
 
-<pre><code>curl -X POST https://jsonbin.org/blog \
+<pre><code>curl -X POST https://jsonbin.org/remy/blog \
      -H 'Authorization: token abcd-xyz-123' \
      -d '{ url: "https://remysharp.com" }'</code></pre>
 
@@ -70,7 +70,7 @@
 
 <p>You can use jsonbin as a shared clipboard across machines. Creating an alias to upload <code>STDIN</code> via <code>curl</code> could be posted to a public URL:</p>
 
-<pre><code>alias jsonbin="curl -H'authorization: token abcd-xyz-123' -F'content=@-' https://jsonbin.org/clipboard"
+<pre><code>alias jsonbin="curl -H'authorization: token abcd-xyz-123' -F'content=@-' https://jsonbin.org/remy/clipboard"
 echo "foo" | jsbonbin
 </code></pre>
 
