@@ -17,12 +17,17 @@ module.exports = {
   base,
 };
 
-function request(user, { method = 'get', url = base, body = {} } = {}) {
+function request(user, {
+  method = 'get',
+  url = base,
+  body = {},
+  json = true,
+} = {}) {
   return _request({
     method,
     body,
     url,
-    json: true,
+    json,
     headers: {
       authorization: `token ${user.apikey}`,
     },

@@ -85,6 +85,20 @@ alias jsonbin="curl -X 'POST' \
 echo "foo" | jsbonbin
 ```
 
+## Example with arrays
+
+As well as objects, arrays are also supported. To delete an array element, it should be accessed using the index as per:
+
+```
+curl -X DELETE https://jsonbin.org/remy/urls/1
+```
+
+To `push` a new element, so long as the endpoint contains an array:
+
+```
+curl -X PATCH -d "foo.com" https://jsonbin.org/remy/urls
+```
+
 ## BUGS
 
 This project lives at [github/jsonbin](https://github.com/remy/jsonbin). Please report bugs to [github/jsonbin/issues](https://github.com/remy/jsonbin/issues).
@@ -92,10 +106,6 @@ This project lives at [github/jsonbin](https://github.com/remy/jsonbin). Please 
 ## AUTHOR
 
 Remy Sharp &lt;[remy@leftlogic.com](mailto:remy@leftlogic.com)&gt;
-
-## LICENSE
-
-[MIT](https://rem.mit-license.org)
 {{/marked}}
 
 <ol class="man-decor man-foot man foot">

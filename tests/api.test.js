@@ -72,6 +72,17 @@ test('DELETE', t => {
   });
 });
 
+test('DELETE (array)', t => {
+  return request(user, {
+    method: 'delete',
+    url: base + '/urls/0',
+  }).then(() => {
+    return request(user).then(body => {
+      t.deepEqual(body, { urls: [] }, 'body matches');
+    });
+  });
+});
+
 test('PATCH (object)', t => {
   return request(user, {
     method: 'post',
@@ -101,11 +112,11 @@ test('PATCH (array)', t => {
   return request(user, {
     method: 'patch',
     url: base + '/urls',
-    body: 'bar.com'
+    body: 'bar.com',
+    json: false,
   }).then(() => {
     return request(user).then(body => {
-      console.log(body);
-      t.deepEqual(body, ['foo.com', 'bar.com'], 'body matches');
+      t.deepEqual(body, { urls: ['foo.com', 'bar.com'] }, 'body matches');
     });
   });
 });
