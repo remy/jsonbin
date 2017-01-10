@@ -13,7 +13,6 @@
 ## SYNOPSIS
 
 curl `{{env.HOST}}/remy/blog`
-<!-- <p>something-on-STDOUT | <code>jsonbin</code></p> -->
 
 ## Access
 
@@ -84,7 +83,20 @@ By default all endpoints are private, but you can modify a specific entry point 
 
 Public endpoints accept `GET` requests without the `authorization` header.
 
-## Example usage
+## Notes on PATCH
+
+The `PATCH` method implements the JSON Merge Patch standard [(RFC 7396)](https://tools.ietf.org/html/rfc7396) when the target endpoint is an `object`. This means if you wish to remove a property from your store, a value of `null` is sent:
+
+```
+curl -X PATCH \
+     -H 'authorization: token {{apikey}}' \
+     -d'{ "title": null }' \
+     {{env.HOST}}/{{username}}/blog
+```
+
+The exception is that when the endpoint is an array, a `PATCH` will _always_ push onto the endpoint. If you need to reset the array you can `POST` to the endpoint, or you can `DELETE` an [individual array element](#example-with-arrays).
+
+## Example storing files
 
 You can use jsonbin as a shared clipboard across machines. Creating an alias to upload `STDIN` via `curl` could be posted to a public URL:
 
@@ -107,7 +119,8 @@ curl -X DELETE {{env.HOST}}/{{username}}/urls/1
 To `push` a new element, so long as the endpoint contains an array:
 
 ```
-curl -X PATCH -d "foo.com" {{env.HOST}}/{{username}}/urls
+curl -X PATCH {{env.HOST}}/{{username}}/urls \
+     -d "foo.com"
 ```
 
 ## BUGS

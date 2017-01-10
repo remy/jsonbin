@@ -1,6 +1,6 @@
 const tap = require('tap');
+const test = require('tap-only');
 const { setup, teardown, request, base, _request } = require('./utils');
-const test = tap.test;
 let user = null;
 
 test('load user', t => {
@@ -82,6 +82,27 @@ test('DELETE', t => {
   });
 });
 
+test('DELETE (root, then POST)', t => {
+  return request(user, {
+    method: 'delete',
+    url: base,
+  }).then(() => {
+    return request(user).then(body => {
+      t.deepEqual(body, {
+      }, 'body matches');
+    });
+  }).then(() => {
+    const body = { 'foo': 'bar' };
+    return request(user, {
+      method: 'post',
+      body
+    }).then(newBody => {
+      t.deepEqual(newBody, body, 'body matches');
+    });
+  });
+});
+
+
 test('DELETE (array)', t => {
   return request(user, {
     method: 'delete',
@@ -93,7 +114,7 @@ test('DELETE (array)', t => {
   });
 });
 
-test('PATCH (object)', t => {
+test('PATCH (object - add new prop)', t => {
   return request(user, {
     method: 'post',
     url: base + '/foo',
@@ -112,6 +133,81 @@ test('PATCH (object)', t => {
     return request(user, { url: base + '/foo' }).then(body => {
       t.deepEqual(body, {
         zoo: 11,
+        bar: 10,
+      }, 'body matches');
+    });
+  });
+});
+
+test('PATCH (root)', t => {
+  // first reset to a object on the root
+  return request(user, {
+    method: 'post',
+    url: base,
+    body: { bar: 10 }
+  }).then(() => {
+    return request(user, {
+      method: 'patch',
+      url: base,
+      body: {
+        zoo: 11,
+      }
+    })
+  }).then(() => {
+    return request(user, { url: base }).then(body => {
+      t.deepEqual(body, {
+        zoo: 11,
+        bar: 10,
+      }, 'body matches');
+    });
+  });
+});
+
+test('PATCH (object - change old prop)', t => {
+  return request(user, {
+    method: 'post',
+    url: base + '/foo',
+    body: {
+      bar: 10,
+    }
+  }).then(() => {
+    return request(user, {
+      method: 'patch',
+      url: base + '/foo',
+      body: {
+        zoo: 11,
+        bar: 11,
+      }
+    })
+  }).then(() => {
+    return request(user, { url: base + '/foo' }).then(body => {
+      t.deepEqual(body, {
+        zoo: 11,
+        bar: 11,
+      }, 'body matches');
+    });
+  });
+});
+
+test('PATCH (object - prop delete)', t => {
+  return request(user, {
+    method: 'post',
+    url: base + '/foo',
+    body: {
+      bar: 10,
+      zoo: 10,
+    }
+  }).then(() => {
+    return request(user, {
+      method: 'patch',
+      url: base + '/foo',
+      body: {
+        zoo: null,
+      }
+    })
+  }).then(() => {
+    return request(user, { url: base + '/foo' }).then(body => {
+      t.deepEqual(body, {
         bar: 10,
       }, 'body matches');
     });
