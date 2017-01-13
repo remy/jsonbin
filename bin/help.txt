@@ -1,0 +1,41 @@
+
+Usage:
+
+  $ jsonbin [options] [property[=value]]
+
+Options:
+
+  --token [api-token] ... your jsonbin.org token
+  --delete .............. delete a property
+  --append .............. append/merge
+
+Examples:
+
+  You can authenticate using two methods:
+
+  $ jsonbin --token 1234-5678
+  $ JSONBIN_TOKEN=1234-5678 jsonbin
+
+  Using an environment variable means it can be in your
+  private enviroment.
+
+  GET all of the store:
+
+  $ jsonbin
+
+  Retrieve a deep property from { blog: urls: [ ... ] }
+
+  $ jsonbin blog.urls.0
+
+  Delete a property:
+
+  $ jsonbin --delete blog.urls.0
+
+  Set a new property:
+
+  $ jsonbin blog="{ url: … }"
+
+  Note that jsonbin will _try_ to detect a JavaScript object
+  and convert it to JSON for you.
+
+For more information see https://jsonbin.org
