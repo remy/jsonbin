@@ -112,6 +112,19 @@ test('DELETE (root, then POST)', t => {
   });
 });
 
+test('DELETE /me', t => {
+  return request(user, {
+    method: 'delete',
+    url: `http://localhost:${process.env.PORT}/me/urls`,
+  }).then(() => {
+    return request(user, {
+      url: `http://localhost:${process.env.PORT}/me/`
+    }).then(body => {
+      t.deepEqual(body, {
+      }, 'body matches');
+    });
+  });
+});
 
 test('DELETE (array)', t => {
   return request(user, {
