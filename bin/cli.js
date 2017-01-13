@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const clite = require('clite');
 clite({
-  help: './help.txt',
+  help: './README',
   booleans: ['delete', 'append'],
   options: ['token'],
   alias: {

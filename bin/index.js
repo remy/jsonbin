@@ -78,7 +78,7 @@ module.exports = (_args, settings, body) => {
           }
         }, (err, res, body) => {
           if (res.statusCode > 201) {
-            reject(new Error(`${res.statusCode}: ${path}\n${body}`));
+            reject(new Error(JSON.stringify(body)));
           } else {
             resolve(body);
           }
