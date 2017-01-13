@@ -3,7 +3,7 @@ const resolveURL = require('url').resolve;
 const request = require('request');
 module.exports = (_args, settings, body) => {
   const token = _args.token || process.env.JSONBIN_TOKEN;
-  console.log('> %s', token);
+
   if (!token) {
     throw new Error('You must include your API key. See jsonbin --help for details.');
   }
