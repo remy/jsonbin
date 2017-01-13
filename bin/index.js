@@ -1,6 +1,7 @@
 const parse = require('querystring').parse;
 const resolveURL = require('url').resolve;
 const request = require('request');
+const host = process.env.HOST || process.env.JSONBIN_HOST || 'https://jsonbin.org';
 module.exports = (_args, settings, body) => {
   const token = _args.token || process.env.JSONBIN_TOKEN;
 
@@ -69,7 +70,7 @@ module.exports = (_args, settings, body) => {
         }
 
         request({
-          url: resolveURL('https://jsonbin.org/me/', path),
+          url: resolveURL(host + '/me/', path),
           method,
           body: json ? JSON.parse(body) : body,
           json,

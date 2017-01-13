@@ -49,6 +49,7 @@ curl -X POST {{env.HOST}}/{{username}}/blog \
 
 A private namespace URL "`_`" is used for jsonbin specific endpoints:
 
+* [`/me`]({{env.HOST}}/me) Alias to your `/{{username}}` path.
 * [`/_/me`]({{env.HOST}}/_/me) Your full profile.
 * [`/_/me/apikey`]({{env.HOST}}/_/me/apikey) Your API key.
 * [`/_/me/apikey`]({{env.HOST}}/_/me/apikey) `DELETE` to revoke your current key.
