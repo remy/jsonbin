@@ -15,24 +15,24 @@ module.exports = (_args, settings, body) => {
 
   return Promise.all(
     _args.argv.slice(2).map(_ => {
-      let key = false;
+      let value = false;
       let json = false;
       return {
         data: parse(_, null, null, {
           decodeURIComponent: s => {
-            if (key) {
-              // try to transform it to JSON
-              const f = new Function('return ' + (s || 'null'));
+            if (value) {
+              if ((s === '-' || s === '"-"') && body) {
+                s = body;
+              }
               try {
+                // try to transform it to JSON
+                const f = new Function('return ' + (s || 'null'));
                 s = JSON.stringify(f());
                 json = true;
               } catch (e) {
               };
             }
-            key = true;
-            if (s === '-' && body) {
-              return body;
-            }
+            value = true;
             return s;
           }
         }),

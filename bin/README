@@ -1,41 +1,51 @@
 
 Usage:
 
-  $ jsonbin [options] [property[=value]]
+    $ jsonbin [options] [property[=value]]
 
 Options:
 
-  --token [api-token] ... your jsonbin.org token
-  --delete .............. delete a property
-  --append .............. append/merge
+    --token [api-token] ... your jsonbin.org token
+    --delete .............. delete a property
+    --append .............. append/merge
+
+  All options can also be abbreviated.
 
 Examples:
 
   You can authenticate using two methods:
 
-  $ jsonbin --token 1234-5678
-  $ JSONBIN_TOKEN=1234-5678 jsonbin
+    $ jsonbin --token 1234-5678
+    $ JSONBIN_TOKEN=1234-5678 jsonbin
 
-  Using an environment variable means it can be in your
-  private enviroment.
+  Using an environment variable means it can be in your private enviroment.
 
   GET all of the store:
 
-  $ jsonbin
+    $ jsonbin
+    > { … }
 
-  Retrieve a deep property from { blog: urls: [ ... ] }
+  Retrieve a deep property from `{ blog: urls: [ ... ] }`
 
-  $ jsonbin blog.urls.0
+    $ jsonbin blog.urls.0
+    > "https://…"
 
   Delete a property:
 
-  $ jsonbin --delete blog.urls.0
+    $ jsonbin --delete blog.urls.0
+    > "https://" # returns deleted value
 
   Set a new property:
 
-  $ jsonbin blog="{ url: … }"
+    $ jsonbin blog="{ url: … }"
+    > { url: … } # returns new value
 
-  Note that jsonbin will _try_ to detect a JavaScript object
-  and convert it to JSON for you.
+  Using JSON merge patch, you can remove properties using `null`:
+
+    $ jsonbin blog="{ url: null }"
+    > { … } # returns updated value
+
+  Note that jsonbin will _try_ to detect a JavaScript object and convert it
+  to JSON for you.
 
 For more information see https://jsonbin.org
