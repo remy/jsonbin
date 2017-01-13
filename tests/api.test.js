@@ -26,6 +26,16 @@ test('GET (no slash)', t => {
   });
 });
 
+test('GET /me alias', t => {
+  return request(user, {
+    url: `http://localhost:${process.env.PORT}/me`,
+  }).then(body => {
+    t.deepEqual(body, {
+      urls: ['foo.com']
+    }, 'body matches');
+  });
+});
+
 test('GET (mixed case username)', t => {
   return request(user, {
     url: `http://localhost:${process.env.PORT}/Test`
