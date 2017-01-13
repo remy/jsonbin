@@ -8,6 +8,10 @@ module.exports = (_args, settings, body) => {
     throw new Error('You must include your API key. See jsonbin --help for details.');
   }
 
+  if (_args.argv.slice(2).length === 0) {
+    _args.argv.push('.');
+  }
+
   return Promise.all(
     _args.argv.slice(2).map(_ => {
       let key = false;
@@ -37,7 +41,7 @@ module.exports = (_args, settings, body) => {
       };
     }).map(kv => {
       return new Promise((resolve, reject) => {
-        const json = kv.json;
+        let json = kv.json;
         const [key, body] = Object.entries(kv.data)[0];
         const post = body !== '' && body !== 'null'; // yes, I meant string
         let path = key.split('.').join('/');
@@ -54,6 +58,10 @@ module.exports = (_args, settings, body) => {
 
         if (method !== 'GET' && path === '/') {
           return reject(new Error(`Cannot ${method} root of JSON store`));
+        }
+
+        if (method === 'GET') {
+          json = true;
         }
 
         if (path.startsWith('/')) {
@@ -77,5 +85,11 @@ module.exports = (_args, settings, body) => {
         });
       });
     })
-  );
+  ).then(res => {
+    if (res.length === 1) {
+      res = res[0];
+    }
+
+    return JSON.stringify(res, '', 2);
+  });
 };
