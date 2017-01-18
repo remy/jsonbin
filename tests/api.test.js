@@ -80,6 +80,27 @@ test('POST', t => {
   });
 });
 
+test('POST (raw numbers)', t => {
+  // this previous caused res.send(10000) to blow up
+  const bar = 1000000;
+  return request(user, {
+    method: 'POST',
+    url: base + '/foo',
+    body: {
+      bar
+    },
+  }).then(() => {
+    return request(user, {
+      url: base + '/foo/bar'
+    }).then(body => {
+      t.deepEqual(body, bar, 'body matches');
+    });
+  }).catch(e =>{
+    console.log(e);
+    throw e;
+  });
+});
+
 test('DELETE', t => {
   return request(user, {
     method: 'delete',
