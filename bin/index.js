@@ -41,6 +41,10 @@ class JsonBin {
     return this.request({ url });
   }
 
+  del(url) {
+    return this.request({ url, method: 'delete' });
+  }
+
   set(url, body) {
     return this.request({
       method: 'post',
