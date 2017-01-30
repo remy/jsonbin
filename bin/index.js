@@ -3,6 +3,9 @@ const Request = require('request');
 module.exports = init;
 
 function init(token = process.env.JSONBIN_TOKEN) {
+  if (!token) {
+    throw new Error('jsonbin.org API token required');
+  }
   return new JsonBin(token);
 }
 
@@ -10,7 +13,7 @@ class JsonBin {
   constructor(token) {
     this.token = token;
     const request = Request.defaults({
-      baseUrl: 'https://jsonbin.org',
+      baseUrl: 'https://jsonbin.org/me',
       headers: {
         authorization: `token ${token}`
       },
@@ -19,13 +22,13 @@ class JsonBin {
 
     this.request = (opts) => {
       return new Promise((resolve, reject) => {
-        request(opts, (error, res, body) => {
+        request(opts, (err, res, body) => {
           if (err) {
             return reject(err);
           }
 
-          if (res.statusCode > 299) {
-            return reject(new Error(res.message));
+          if (res.statusCode > 299) {;
+            return reject(new Error(body.message));
           }
 
           resolve(body);
