@@ -28,7 +28,7 @@ class JsonBin {
           }
 
           if (res.statusCode > 299) {;
-            return reject(new Error(body.message));
+            return reject(new Error(res.statusCode));
           }
 
           resolve(body);
