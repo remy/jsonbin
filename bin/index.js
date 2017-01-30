@@ -1,96 +1,48 @@
-const parse = require('querystring').parse;
-const resolveURL = require('url').resolve;
-const request = require('request');
-const host = process.env.HOST || process.env.JSONBIN_HOST || 'https://jsonbin.org';
-module.exports = (_args, settings, body) => {
-  const token = _args.token || process.env.JSONBIN_TOKEN;
+const Request = require('request');
 
-  if (!token) {
-    throw new Error('You must include your API key. See jsonbin --help for details.');
-  }
+module.exports = init;
 
-  if (_args.argv.slice(2).length === 0) {
-    _args.argv.push('.');
-  }
+function init(token = process.env.JSONBIN_TOKEN) {
+  return new JsonBin(token);
+}
 
-  return Promise.all(
-    _args.argv.slice(2).map(_ => {
-      let value = false;
-      let json = false;
-      return {
-        data: parse(_, null, null, {
-          decodeURIComponent: s => {
-            if (value) {
-              if ((s === '-' || s === '"-"') && body) {
-                s = body;
-              }
-              try {
-                // try to transform it to JSON
-                const f = new Function('return ' + (s || 'null'));
-                s = JSON.stringify(f());
-                json = true;
-              } catch (e) {
-              };
-            }
-            value = true;
-            return s;
-          }
-        }),
-        // super important that this value is last as it's
-        // interpretted *after* the above function runs
-        json,
-      };
-    }).map(kv => {
+class JsonBin {
+  constructor(token) {
+    this.token = token;
+    const request = Request.defaults({
+      baseUrl: 'https://jsonbin.org',
+      headers: {
+        authorization: `token ${token}`
+      },
+      json: true,
+    });
+
+    this.request = (opts) => {
       return new Promise((resolve, reject) => {
-        let json = kv.json;
-        const [key, body] = Object.entries(kv.data)[0];
-        const post = body !== '' && body !== 'null'; // yes, I meant string
-        let path = key.split('.').join('/');
-
-        let method = post ? 'POST' : 'GET';
-
-        if (_args.delete) {
-          method = 'DELETE';
-        }
-
-        if (_args.append) {
-          method = 'PATCH';
-        }
-
-        if (method !== 'GET' && path === '/') {
-          return reject(new Error(`Cannot ${method} root of JSON store`));
-        }
-
-        if (method === 'GET') {
-          json = true;
-        }
-
-        if (path.startsWith('/')) {
-          path = path.slice(1);
-        }
-
-        request({
-          url: resolveURL(host + '/me/', path),
-          method,
-          body: json ? JSON.parse(body) : body,
-          json,
-          headers: {
-            authorization: `token ${token}`
+        request(opts, (error, res, body) => {
+          if (err) {
+            return reject(err);
           }
-        }, (err, res, body) => {
-          if (res.statusCode > 201) {
-            reject(new Error(JSON.stringify(body)));
-          } else {
-            resolve(body);
+
+          if (res.statusCode > 299) {
+            return reject(new Error(res.message));
           }
+
+          resolve(body);
         });
       });
-    })
-  ).then(res => {
-    if (res.length === 1) {
-      res = res[0];
     }
+  }
 
-    return JSON.stringify(res, '', 2);
-  });
-};
+  get(url) {
+    return this.request({ url });
+  }
+
+  set(url, body) {
+    return this.request({
+      method: 'post',
+      url,
+      body,
+    })
+  }
+}
