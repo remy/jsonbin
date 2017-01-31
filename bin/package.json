@@ -1,7 +1,7 @@
 {
   "name": "jsonbin",
   "readme": "README",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "CLI and package for jsonbin.org",
   "main": "index.js",
   "bin": {
@@ -15,6 +15,10 @@
   "keywords": [],
   "author": "Remy Sharp",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remy/jsonbin/tree/master/bin"
+  },
   "dependencies": {
     "babel-runtime": "^6.20.0",
     "clite": "^0.3.0",

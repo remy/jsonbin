@@ -13,6 +13,6 @@ clite({
     apikey: 'token',
   },
   commands: {
-    _: 'index',
+    _: 'cli-handle',
   },
 });
