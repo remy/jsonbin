@@ -13,7 +13,7 @@
   "scripts": {
     "now-start": "node lib/index.js",
     "postversion": "now --alias $npm_package_now_alias",
-    "start": "NODE_ENV=dev nodemon lib/index.js -w lib",
+    "start": "NODE_ENV=dev PORT=3001 nodemon lib/index.js -w lib",
     "pretest": "NODE_ENV=test PORT=7331 node lib/index.js & echo $! > .pid; sleep 1;",
     "test": "NODE_ENV=test PORT=7331 tap tests/*.test.js -Rspec; kill $(cat .pid); rm .pid"
   },
@@ -36,11 +36,12 @@
     "marked": "^0.3.6",
     "moment": "^2.17.1",
     "mongoose": "^4.7.5",
+    "morgan": "^1.7.0",
     "multer": "^1.2.1",
     "passport": "^0.3.2",
     "passport-github2": "^0.1.10",
     "serve-favicon": "^2.3.2",
-    "tap-only": "^0.0.5",
+    "std-loggly": "^1.0.0",
     "undefsafe": "^1.2.0",
     "universal-analytics": "^0.4.8",
     "uuid": "^3.0.1"
@@ -49,6 +50,7 @@
     "proxyquire": "^1.7.10",
     "request": "^2.79.0",
     "sinon": "^1.17.7",
-    "tap": "^8.0.1"
+    "tap": "^8.0.1",
+    "tap-only": "^0.0.5"
   }
 }
