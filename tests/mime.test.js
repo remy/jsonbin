@@ -32,8 +32,11 @@ tap.afterEach(done => {
   user.store = {
     urls: ['foo.com']
   };
-  user.markModified('store');
-  user.save().then(() => done());
+  user.dirty();
+  user.save().then(() => done()).catch(e => {
+    console.log(e.stack);
+    done(e);
+  });
 });
 
 test('x-www-form-urlencoded "bar.com"', t => {

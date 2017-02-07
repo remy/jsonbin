@@ -3,7 +3,7 @@ const test = require('tap-only');
 const { setup, teardown, request, base, _request } = require('./utils');
 let user = null;
 
-test.only('load user', t => {
+test('load user', t => {
   return setup({
     urls: ['foo.com']
   }).then(u => user = u).then(() => t.pass('user loaded'));
@@ -14,7 +14,7 @@ tap.afterEach(done => {
   user.store = {
     urls: ['foo.com']
   };
-  user.markModified('store');
+  user.dirty();
   user.save().then(() => done());
 });
 
@@ -120,7 +120,7 @@ test('DELETE (root, then POST)', t => {
   }).then(() => {
     return request(user).then(body => {
       t.deepEqual(body, {
-      }, 'body matches');
+      }, 'body empty');
     });
   }).then(() => {
     const body = { 'foo': 'bar' };
@@ -280,7 +280,7 @@ test('permissions', t => {
       url: base + '/urls',
       json: true
     }).then(res => {
-      t.deepEqual(res.body, ['foo.com'], 'body matches');
+      t.deepEqual(res.body, ['foo.com'], 'body matches: ' + res.body);
     });
   });
 });
