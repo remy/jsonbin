@@ -3,7 +3,7 @@ const test = require('tap-only');
 const { setup, teardown, request, base, _request } = require('./utils');
 let user = null;
 
-test('load user', t => {
+test.only('load user', t => {
   return setup({
     urls: ['foo.com']
   }).then(u => user = u).then(() => t.pass('user loaded'));

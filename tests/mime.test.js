@@ -1,7 +1,7 @@
 const tap = require('tap');
 const { setup, teardown, base, _request } = require('./utils');
 const request = require('./request-then');
-const test = tap.test;
+const test = require('tap-only');
 const url = base + '/urls';
 let user = null;
 
