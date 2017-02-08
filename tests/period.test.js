@@ -38,3 +38,20 @@ test('POST url["one.two"]', t => {
     });
   });
 });
+
+test('POST url["one.two"] v2', t => {
+  return request(user, {
+    method: 'POST',
+    body: {
+      a: { 'one.two': { a: true } }
+    },
+  }).then(body => {
+    t.deepEqual(body, { a: { 'one.two': { a: true } } }, 'body matches');
+
+    return request(user, {
+      url: base + '/a/one.two/a'
+    }).then(body => {
+      t.equal(body, true, `${base}/one.two/a matches ${body}`)
+    });
+  });
+});
