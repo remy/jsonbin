@@ -2,7 +2,7 @@
   "name": "jsonbin",
   "version": "2.3.0",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.js",
   "private": true,
   "now": {
     "alias": "jsonbin.org",
@@ -11,10 +11,10 @@
     }
   },
   "scripts": {
-    "now-start": "node lib/index.js",
-    "postversion": "now --alias $npm_package_now_alias",
-    "start": "NODE_ENV=dev PORT=3001 nodemon lib/index.js -w lib",
-    "pretest": "NODE_ENV=test PORT=7331 node lib/index.js & echo $! > .pid; sleep 1;",
+    "now-start": "node .",
+    "postversion": "now && now alias",
+    "start": "NODE_ENV=dev PORT=3001 nodemon . -w lib",
+    "pretest": "NODE_ENV=test PORT=7331 node . & echo $! > .pid; sleep 1;",
     "test": "NODE_ENV=test PORT=7331 tap tests/*.test.js -Rspec; kill $(cat .pid); rm .pid"
   },
   "keywords": [],
