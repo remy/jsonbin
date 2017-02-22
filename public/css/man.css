@@ -25,7 +25,7 @@
   .mp em,.mp var {font-style:italic;color:#232221;text-decoration:none}
   .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#0000ff}
   .mp b.man-ref {font-weight:normal;color:#434241}
-  .mp pre {padding:0 4ex}
+  .mp pre {padding:0 0 0 4ex}
   .mp pre code {font-weight:normal;color:#434241}
   .mp h2+pre,h3+pre {padding-left:0}
   ol.man-decor,ol.man-decor li {margin:3px 0 10px 0;padding:0;float:left;width:33%;list-style-type:none;text-transform:uppercase;color:#999;letter-spacing:1px}
@@ -35,12 +35,16 @@
   ol.man-decor li.tr {text-align:right;float:right}
 
   /* style: 80c */
-  .mp {max-width:86ex}
+  .mp {max-width:86ex; max-width:80ch}
   ul {list-style: None; margin-left: 1em!important}
   .man-navigation {left:101ex}
   @media screen and (max-width:420px) {
     ul {
       padding-left: 1em;
+    }
+
+    .mp {
+      padding: 0 4ex 1ex 2ex;
     }
 
     .mp pre { overflow: scroll; padding-left: 0; }
@@ -50,3 +54,8 @@
   }
 
 :target:before {content: '* ';position: absolute;margin-left: -14px;color: blueviolet;line-height: 22px;}
+
+pre {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
