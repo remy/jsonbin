@@ -282,7 +282,22 @@ test('permissions', t => {
     }).then(res => {
       t.deepEqual(res.body, ['foo.com'], 'body matches: ' + res.body);
     });
-  });
+  }).then(() => {
+    return request(user, {
+      method: 'post',
+      body: {
+        secret: 'sauce'
+      },
+      url: base + '/urlsandstuff',
+    })
+  }).then(() => {
+    return _request({
+      url: base + '/urlsandstuff',
+      json: true
+    }).then(res => {
+      t.equal(res.statusCode, 404, 'correctly denies access to alternative url');
+    });
+  })
 });
 
 
