@@ -1,7 +1,7 @@
 const tap = require('tap');
 const { setup, teardown, base, _request } = require('./utils');
 const request = require('./request-then');
-const test = tap.test;
+const test = require('tap-only');
 const url = base + '/urls';
 let user = null;
 
@@ -32,8 +32,11 @@ tap.afterEach(done => {
   user.store = {
     urls: ['foo.com']
   };
-  user.markModified('store');
-  user.save().then(() => done());
+  user.dirty();
+  user.save().then(() => done()).catch(e => {
+    console.log(e.stack);
+    done(e);
+  });
 });
 
 test('x-www-form-urlencoded "bar.com"', t => {

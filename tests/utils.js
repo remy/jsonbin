@@ -38,10 +38,12 @@ function request(user, {
 }
 
 function setup(store = {}) {
-  return User.findOrCreate({ githubId: 1, email: null }, {
-    login: 'test',
-    store,
-  });
+  return User.remove({ username: 'test'}).then(() => {
+    return User.findOrCreate({ githubId: 1, email: null }, {
+      login: 'test',
+      store,
+    });
+  })
 }
 
 function teardown() {

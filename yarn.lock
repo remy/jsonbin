@@ -2304,9 +2304,9 @@ uid2@0.0.x:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/uid2/-/uid2-0.0.3.tgz#483126e11774df2f71b8b639dcd799c376162b82"
 
-undefsafe:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/undefsafe/-/undefsafe-1.2.0.tgz#e6888286cbb15340cabe20118df9b8db531351a4"
+undefsafe@1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/undefsafe/-/undefsafe-1.3.1.tgz#168853130e15d57a5842a294bd0f203f1dd734ac"
   dependencies:
     debug "^2.2.0"
 
