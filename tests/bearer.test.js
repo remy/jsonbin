@@ -5,14 +5,14 @@ let user = null;
 
 test('load user', t => {
   return setup({
-    urls: ['foo.com']
+    urls: ['foo.com', 'bar.com']
   }).then(u => user = u).then(() => t.pass('user loaded'));
 });
 
 // reset the user store
 tap.afterEach(done => {
   user.store = {
-    urls: ['foo.com']
+    urls: ['foo.com', 'bar.com']
   };
   user.dirty();
   user.save().then(() => done());
@@ -24,19 +24,27 @@ tap.tearDown(() => {
 });
 
 test('GET (cross origin)', t => {
-  return _request({
-    url: `${base}/urls`,
+  const token = user.generateBearer({ expiresIn: '10s', path: 'urls.0' });
+  const opts = {
+    url: `${base}/urls/0`,
     json: true,
     headers: {
-      authorization: `Bearer ${user.generateBearer('10s')}`
+      authorization: `Bearer ${token}`
     }
-  }).then(res => {
-    t.deepEqual(res.body, ['foo.com'], `body matches: ${JSON.stringify(res.body)}`);
+  };
+
+  return _request(opts).then(res => {
+    t.equal(res.body, 'foo.com', `body matches: ${JSON.stringify(res.body)}`);
+
+    return _request(Object.assign({}, opts, { url: `${base}/urls/1` })).then(res => {
+      t.equal(res.body, null, `body matches: ${JSON.stringify(res.body)}`);
+      t.equal(res.statusCode, 401, `status ${res.statusCode}`);
+    })
   });
 });
 
 test('GET (cross origin - expired token)', t => {
-  const token = user.generateBearer('10ms');
+  const token = user.generateBearer({ expiresIn: '10ms' });
   t.plan(1);
   setTimeout(() => {
     return _request({
