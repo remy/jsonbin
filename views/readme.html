@@ -45,12 +45,12 @@ curl -X POST {{env.HOST}}/{{username}}/blog \
      -d '{ url: "https://remysharp.com" }'
 ```
 
-To use jsonbin in the browser, it's recommended that you use a [bearer](/_/bearer) token with a limited expiry:
+To use jsonbin in the browser, it's recommended that you use a [bearer](/_/bearer?path=urls) token with a limited expiry:
 
 ```
 fetch('{{env.HOST}}/me/urls', {
   headers: {
-    // example uses 1 minute token
+    // example uses 1 minute token restricted to `urls` path
     authorization: 'Bearer {{bearer}}',
   }
 }).then(res => res.json()).then(res => {
@@ -69,8 +69,9 @@ A private namespace URL "`_`" is used for jsonbin specific endpoints:
 * [`/_/me/username`]({{env.HOST}}/_/me/username) Your username.
 * [`/_/me/public`]({{env.HOST}}/_/me/public) Your public paths.
 * [`/_/me/:path`]({{env.HOST}}/_/me/) Deep link to profile properties.
-* [`/_/bearer(?exp=ms)`]({{env.HOST}}/_/bearer) Generate a bearer token (for client use)
+* [`/_/bearer(?exp=ms&path=…)`]({{env.HOST}}/_/bearer) Generate a bearer token (for client use)
 * [`/_/help`]({{env.HOST}}/_/help) This page.
+* [`/_/version`]({{env.HOST}}/_/version) Current jsonbin version.
 * [`/_/login`]({{env.HOST}}/_/login) Auth with github.
 * [`/_/logout`]({{env.HOST}}/_/logout) Clear your session.
 
