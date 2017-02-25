@@ -63,7 +63,7 @@ function teardown() {
 function op(file) {
   let index = -1;
   const requests = [];
-  const setup = {
+  const config = {
     setup: '',
     expect: '',
   };
@@ -78,7 +78,7 @@ function op(file) {
       const type = line.toLowerCase().split(/\s/, 2).pop();
       i++;
       while (line = lines[i].trim()) {
-        setup[type] += line;
+        config[type] += line;
         i++;
       }
       continue;
@@ -117,5 +117,8 @@ function op(file) {
     requests[index].body = line;
   }
 
-  return { setup: JSON.parse(setup.setup), expect: JSON.parse(setup.expect), op: requests };
+  const setup = new Function('return ' + (config.setup || 'null'))();
+  const expect = new Function('return ' + (config.expect || 'null'))();
+
+  return { setup, expect, op: requests };
 }

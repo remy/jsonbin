@@ -50,13 +50,13 @@ Object.keys(tests).forEach(id => {
           method: op.method,
           body: op.body
         }).then(res => {
-          t.ok(res.statusCode < 300, `Complete ${op.method} ${op.url}: ${res.statusCode}`);
+          t.ok(res.statusCode < 300, `${op.method} ${op.url}: ${res.statusCode}`);
         }))
       }, Promise.resolve());
 
       return requests.then(() => updateUser(user)).then(user => {
         const { store } = user.toObject();
-        t.deepEqual(expect, store);
+        t.deepEqual(expect, store, 'final response');
       });
     });
   });

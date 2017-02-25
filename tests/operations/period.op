@@ -1,0 +1,18 @@
++ setup
+{
+  urls: {}
+}
+
+# POST /me/urls
+headers:
+  authorization: token ${token}
+  Content-Type: application/json
+
+{ "one.two": true }
+
++ expect
+{
+  "urls": {
+    'one.two': true
+  }
+}
