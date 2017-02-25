@@ -1,5 +1,22 @@
 const test = require('tap').test;
-const { urlToArray, urlToPath } = require('../lib/routes/utils');
+const { partialMatch, urlToArray, urlToPath } = require('../lib/routes/utils');
+
+test('partialMatch', t => {
+  const allowed = 'b1';
+
+  [
+    'b1',
+    'b1/foo',
+    'b1.foo',
+    'b1["foo"]',
+    "b1['foo']",
+  ].forEach(_ => {
+    t.ok(partialMatch(_, allowed), _);
+  });
+
+  t.notOk(partialMatch('b123', allowed), 'b123 not allowed');
+  t.end();
+});
 
 test('urlToArray', t => {
   t.deepEqual(urlToArray('/url/1/'), ['url', '1']);
