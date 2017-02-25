@@ -1,0 +1,9 @@
+# PATCH /me/blog
+Headers:
+  authorization: token ${token}
+  Content-Type: application/json
+
+{"name":null}
+
+// limitations:
+// - headers can't be multiline
