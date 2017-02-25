@@ -21,24 +21,15 @@ tap.tearDown(() => {
 
 const dir = __dirname + '/operations/';
 const tests = fs.readdirSync(dir).reduce((acc, file) => {
-  const [ id, place ] = file.split('.');
-  if (!acc[id]) {
-    acc[id] = {};
-  }
-
-  if (place === 'op') {
-    acc[id][place] = op(dir + file);
-  } else {
-    acc[id][place] = require(dir + file);
-  }
+  const [ id ] = file.split('.');
+  acc[id] = op(dir + file);
 
   return acc;
 }, {});
 
 Object.keys(tests).forEach(id => {
   test(`issue #${id}`, t => {
-    // setup
-    user.store = tests[id].start;
+    user.store = tests[id].setup;
     const expect = tests[id].expect;
     user.dirty();
     return user.save().then(() => {

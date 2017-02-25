@@ -61,13 +61,28 @@ function teardown() {
 }
 
 function op(file) {
-  const body = fs.readFileSync(file, 'utf8');
-  const requests = [];
   let index = -1;
-  const lines = body.split('\n');
+  const requests = [];
+  const setup = {
+    setup: '',
+    expect: '',
+  };
+
+  const lines = fs.readFileSync(file, 'utf8').split('\n');
 
   for (let i = 0; i < lines.length; i++) {
     let line = lines[i].trim();
+
+    if (line[0] === '+') {
+      // slurp blank lines and the body
+      const type = line.toLowerCase().split(/\s/, 2).pop();
+      i++;
+      while (line = lines[i].trim()) {
+        setup[type] += line;
+        i++;
+      }
+      continue;
+    }
 
     if (line === '') {
       continue;
@@ -102,5 +117,5 @@ function op(file) {
     requests[index].body = line;
   }
 
-  return requests;
+  return { setup: JSON.parse(setup.setup), expect: JSON.parse(setup.expect), op: requests };
 }

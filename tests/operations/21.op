@@ -1,3 +1,15 @@
++ setup
+{
+  "blog": {
+    "name": "srgg",
+    "last name": "who knows",
+    "moniker": {
+      "first one": "Pierrot"
+    }
+  }
+}
+
+
 # PATCH /me/blog
 Headers:
   authorization: token ${token}
@@ -7,3 +19,13 @@ Headers:
 
 // limitations:
 // - headers can't be multiline
+
++ expect
+{
+  "blog": {
+    "last name": "who knows",
+    "moniker": {
+      "first one": "Pierrot"
+    }
+  }
+}
