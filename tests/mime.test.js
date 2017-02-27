@@ -46,7 +46,7 @@ test(`json (error) 'bar.com'`, t => {
     body: 'bar.com',
     headers: getHeaders('application/json'),
   }).then((res) => {
-    t.equal(res.statusCode, 500, 'errors when invalid json sent');
+    t.equal(res.statusCode, 400, 'errors when invalid json sent');
 
     return request({
       url,
