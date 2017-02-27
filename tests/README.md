@@ -58,10 +58,10 @@ Headers:
 }
 ```
 
-## Authorization headers
+## Notes
 
 The following headers will be automatically expanded to include real valid tokens:
 
 - `authorization: token ${token}`
 - `authorization: bearer ${token}`
-
+- The username for the tests is `test` - which is synonymous with the `/me` path
