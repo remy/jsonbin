@@ -20,15 +20,19 @@ tap.tearDown(() => {
 });
 
 const dir = __dirname + '/operations/';
-const tests = fs.readdirSync(dir).reduce((acc, file) => {
+const tests = fs.readdirSync(dir).filter(_ => {
+  if (process.env.TEST) {
+    return _.includes(process.env.TEST);
+  }
+  return true;
+}).reduce((acc, file) => {
   const [ id ] = file.split('.');
   acc[id] = op(dir + file);
-
   return acc;
 }, {});
 
 Object.keys(tests).forEach(id => {
-  test(`issue #${id}`, t => {
+  test(tests[id].name || `issue #${id}`, t => {
     user.store = tests[id].setup;
     const expect = tests[id].expect;
     user.dirty();
@@ -51,12 +55,23 @@ Object.keys(tests).forEach(id => {
           body: op.body
         }).then(res => {
           t.ok(res.statusCode < 300, `${op.method} ${op.url}: ${res.statusCode}`);
+          if (res.statusCode === 500) {
+            t.fail(res.body)
+          }
+          return res;
         }))
       }, Promise.resolve());
 
-      return requests.then(() => updateUser(user)).then(user => {
-        const { store } = user.toObject();
-        t.deepEqual(expect, store, 'final response');
+      return requests.then(res => {
+        if (res.req.method === 'GET') {
+          if (res.headers['content-type'].includes('application/json')) {
+            return JSON.parse(res.body);
+          }
+          return res.body;
+        }
+        return updateUser(user).then(user => user.toObject().store);
+      }).then(store => {
+        t.deepEqual(expect, store, `expected response matches: ${JSON.stringify(store)}`);
       });
     });
   });

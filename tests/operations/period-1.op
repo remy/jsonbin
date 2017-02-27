@@ -1,7 +1,8 @@
++name
+POST url["one.two"]
+
 + setup
-{
-  urls: {}
-}
+{ "urls": {} }
 
 # POST /me/urls
 headers:

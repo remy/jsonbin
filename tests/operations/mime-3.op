@@ -1,0 +1,18 @@
++name
+x-www-form-urlencoded "{ "url": "bar.com" }"
+
++setup
+{ urls: ['foo.com'] }
+
+# PATCH /me/urls
+headers:
+  authorization: token ${token}
+  Content-Type: application/x-www-form-urlencoded
+
+{ "url": "bar.com" }
+
++expect
+{urls: [
+        'foo.com',
+        { url: 'bar.com' }
+]}

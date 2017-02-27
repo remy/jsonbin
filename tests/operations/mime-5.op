@@ -1,0 +1,20 @@
++name
+json (non-strict) '"bar.com"'
+
++setup
+{ urls: ['foo.com'] }
+
+# PATCH /me/urls
+headers:
+  authorization: token ${token}
+  content-type: application/json
+
+"bar.com"
+
++expect
+{
+  urls: [
+        'foo.com',
+        'bar.com'
+      ]
+}

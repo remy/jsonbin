@@ -1,0 +1,20 @@
++name
+POST url["one.two"] v2
+
++ setup
+{ "urls": {} }
+
+# POST /me/urls
+headers:
+  authorization: token ${token}
+  Content-Type: application/json
+
+{ "a": { "one.two": { "a": true } } }
+
+# GET /me/urls/a/one.two/a
+headers:
+  authorization: token ${token}
+  Content-Type: application/json
+
++ expect
+true

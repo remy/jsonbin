@@ -1,0 +1,19 @@
++name
+no mime 'bar.com'
+
++setup
+{ urls: ['foo.com'] }
+
+# PATCH /me/urls
+headers:
+  authorization: token ${token}
+
+bar.com
+
++expect
+{
+  urls: [
+    'foo.com',
+    'bar.com',
+  ]
+}

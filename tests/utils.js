@@ -66,6 +66,7 @@ function op(file) {
   const config = {
     setup: '',
     expect: '',
+    name: '',
   };
 
   const lines = fs.readFileSync(file, 'utf8').split('\n');
@@ -75,7 +76,7 @@ function op(file) {
 
     if (line[0] === '+') {
       // slurp blank lines and the body
-      const type = line.toLowerCase().split(/\s/, 2).pop();
+      const type = line.trim().slice(1).trim();
       i++;
       while (line = lines[i].trim()) {
         config[type] += line;
@@ -120,5 +121,5 @@ function op(file) {
   const setup = new Function('return ' + (config.setup || 'null'))();
   const expect = new Function('return ' + (config.expect || 'null'))();
 
-  return { setup, expect, op: requests };
+  return { name: config.name, setup, expect, op: requests };
 }
