@@ -48,6 +48,7 @@
     "passport-github2": "^0.1.10",
     "request": "^2.79.0",
     "serve-favicon": "^2.3.2",
+    "server-timings": "^1.0.4",
     "shortid": "^2.2.6",
     "std-loggly": "^1.0.0",
     "undefsafe": "1.3.1",

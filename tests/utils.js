@@ -101,6 +101,7 @@ function op(file) {
         method,
         url: root + url,
         headers: {},
+        body: '',
       }
       continue;
     }
@@ -115,7 +116,7 @@ function op(file) {
       continue;
     }
 
-    requests[index].body = line;
+    requests[index].body += line;
   }
 
   const setup = new Function('return ' + (config.setup || 'null'))();
