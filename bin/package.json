@@ -1,7 +1,7 @@
 {
   "name": "jsonbin",
   "readme": "README",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "CLI and package for jsonbin.org",
   "main": "index.js",
   "bin": {
