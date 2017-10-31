@@ -1,16 +1,15 @@
 {
   "name": "jsonbin",
   "readme": "README",
-  "version": "1.3.3",
+  "version": "1.4.0",
   "description": "CLI and package for jsonbin.org",
   "main": "index.js",
   "bin": {
     "jsonbin": "./cli.js"
   },
   "scripts": {
-    "prepublish": "babel --ignore=node_modules . -d .",
-    "postpublish": "git checkout *.js # resetting",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepublishOnly": "babel --ignore=node_modules index.js -o index.js",
+    "postpublish": "git checkout *.js # resetting"
   },
   "keywords": [],
   "author": "Remy Sharp",
@@ -22,13 +21,14 @@
   "dependencies": {
     "babel-runtime": "^6.20.0",
     "clite": "^0.3.0",
-    "request": "^2.79.0"
+    "jsome": "^2.3.26",
+    "request": "^2.83.0"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-plugin-es6-promise": "^1.0.0",
     "babel-plugin-transform-runtime": "^6.15.0",
-    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-stage-3": "^6.17.0"
   }
 }

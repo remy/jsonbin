@@ -1,11 +1,12 @@
 const parse = require('querystring').parse;
 const resolveURL = require('url').resolve;
+const jsome = require('jsome');
 const request = require('request');
 const host =
   process.env.HOST || process.env.JSONBIN_HOST || 'https://jsonbin.org';
 
-module.exports = (_args, settings, body) => {
-  const token = _args.token || process.env.JSONBIN_TOKEN;
+module.exports = (args, settings, body) => {
+  const token = args.token || process.env.JSONBIN_TOKEN;
 
   if (!token) {
     throw new Error(
@@ -13,12 +14,12 @@ module.exports = (_args, settings, body) => {
     );
   }
 
-  if (_args.argv.slice(2).length === 0) {
-    _args.argv.push('.');
+  if (args.argv.slice(2).length === 0) {
+    args.argv.push('.');
   }
 
   return Promise.all(
-    _args.argv
+    args.argv
       .slice(2)
       .map(_ => {
         let value = false;
@@ -42,7 +43,7 @@ module.exports = (_args, settings, body) => {
             },
           }),
           // super important that this value is last as it's
-          // interpretted *after* the above function runs
+          // interpreted *after* the above function runs
           json,
         };
       })
@@ -55,11 +56,11 @@ module.exports = (_args, settings, body) => {
 
           let method = post ? 'POST' : 'GET';
 
-          if (_args.delete) {
+          if (args.delete) {
             method = 'DELETE';
           }
 
-          if (_args.append) {
+          if (args.append) {
             method = 'PATCH';
           }
 
@@ -104,6 +105,6 @@ module.exports = (_args, settings, body) => {
       return res;
     }
 
-    return JSON.stringify(res, '', 2);
+    return jsome.getColoredString(res);
   });
 };
