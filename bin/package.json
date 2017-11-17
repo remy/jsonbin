@@ -1,7 +1,7 @@
 {
   "name": "jsonbin",
   "readme": "README",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "CLI and package for jsonbin.org",
   "main": "index.js",
   "bin": {
@@ -20,8 +20,8 @@
   },
   "dependencies": {
     "babel-runtime": "^6.20.0",
+    "cli-highlight": "^1.1.4",
     "clite": "^0.3.0",
-    "jsome": "^2.3.26",
     "request": "^2.83.0"
   },
   "devDependencies": {

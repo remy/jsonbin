@@ -1,6 +1,6 @@
 const parse = require('querystring').parse;
 const resolveURL = require('url').resolve;
-const jsome = require('jsome');
+const highlight = require('cli-highlight').highlight;
 const request = require('request');
 const host =
   process.env.HOST || process.env.JSONBIN_HOST || 'https://jsonbin.org';
@@ -105,6 +105,13 @@ module.exports = (args, settings, body) => {
       return res;
     }
 
-    return jsome.getColoredString(res);
+    res = JSON.stringify(res, '', 2);
+
+    if (process.stdout.isTTY) {
+      // if not being piped
+      return highlight(res, { language: 'json' });
+    }
+
+    return res;
   });
 };
