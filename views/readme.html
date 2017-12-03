@@ -6,6 +6,7 @@
 </ol>
 
 {{#marked}}
+
 ## NAME
 
 `jsonbin.org` - A personal JSON store as a RESTful service
@@ -16,28 +17,32 @@ curl `{{env.HOST}}/remy/blog`
 
 ## Access
 
-{{#if publicId}}
-You're currently signed in as:
+{{#if publicId}} You're currently signed in as:
 
-- username: `{{username}}`
-- apikey: `{{apikey}}`
+* username: `{{username}}`
+* apikey: `{{apikey}}`
 
-All examples below will use these details.
-{{else}}
-To save data, you'll first need to [sign in]({{env.HOST}}/_/login) to get an API key. All examples below use `example` as the username.
-{{/if}}
+All examples below will use these details. {{else}} To save data, you'll first
+need to [sign in]({{env.HOST}}/_/login) to get an API key. All examples below
+use `example` as the username. {{/if}}
 
 ## DESCRIPTION
 
-`jsonbin.org` is a personal key/value JSON store as a service. Protected behind authentication and API key requests, data is stored as JSON and can be deep linked. A permissioning model also allows specific paths to your store to become public to share with others.
+`jsonbin.org` is a personal key/value JSON store as a service. Protected behind
+authentication and API key requests, data is stored as JSON and can be deep
+linked. A permissioning model also allows specific paths to your store to become
+public to share with others.
 
 The aim of the project is to provide a simplified data store for tinkerers.
 
-**Important:** jsonbin is currently in open beta. If you have questions, please get [in touch](#author).
+**Important:** jsonbin is currently in open beta. If you have questions, please
+get [in touch](#author).
 
 ## Authentication
 
-By default all user store data is protected behind auth either via browser sign in, or an `authorization` token. The token is your [`apikey`]({{env.HOST}}/_/me/apikey). For example:
+By default all user store data is protected behind auth either via browser sign
+in, or an `authorization` token. The token is your
+[`apikey`]({{env.HOST}}/_/me/apikey). For example:
 
 ```
 curl -X POST {{env.HOST}}/{{username}}/blog \
@@ -45,7 +50,8 @@ curl -X POST {{env.HOST}}/{{username}}/blog \
      -d '{ url: "https://remysharp.com" }'
 ```
 
-To use jsonbin in the browser, it's recommended that you use a [bearer](/_/bearer?path=urls) token with a limited expiry:
+To use jsonbin in the browser, it's recommended that you use a
+[bearer](/_/bearer?path=urls) token with a limited expiry:
 
 ```
 fetch('{{env.HOST}}/me/urls', {
@@ -65,17 +71,23 @@ A private namespace URL "`_`" is used for jsonbin specific endpoints:
 * [`/me`]({{env.HOST}}/me) Alias to your `/{{username}}` path.
 * [`/_/me`]({{env.HOST}}/_/me) Your full profile.
 * [`/_/me/apikey`]({{env.HOST}}/_/me/apikey) Your API key.
-* [`/_/me/apikey`]({{env.HOST}}/_/me/apikey) `DELETE` to revoke your current key.
+* [`/_/me/apikey`]({{env.HOST}}/_/me/apikey) `DELETE` to revoke your current
+  key.
 * [`/_/me/username`]({{env.HOST}}/_/me/username) Your username.
 * [`/_/me/public`]({{env.HOST}}/_/me/public) Your public paths.
-* [`/_/me/:path`]({{env.HOST}}/_/me/) Deep link to profile properties.
-* [`/_/bearer(?exp=ms&path=…)`]({{env.HOST}}/_/bearer) Generate a bearer token (for client use)
+* [`/_/me/:path`]({{env.HOST}}/_/me/) Deep link to profile properties. {{#if_eq
+  accountType.name "PRO"}}
+* [`/_/archives/:path`]({{env.HOST}}/_/archives/) Historical changes to your
+  store. {{/if_eq}}
+* [`/_/bearer(?exp=ms&path=…)`]({{env.HOST}}/_/bearer) Generate a bearer token
+  (for client use)
 * [`/_/help`]({{env.HOST}}/_/help) This page.
 * [`/_/version`]({{env.HOST}}/_/version) Current jsonbin version.
 * [`/_/login`]({{env.HOST}}/_/login) Auth with github.
 * [`/_/logout`]({{env.HOST}}/_/logout) Clear your session.
 
-The following methods with your `authorization` header will access your data store:
+The following methods with your `authorization` header will access your data
+store:
 
 * `GET` return given path mapped to a JSON path.
 * `POST` store the payload (supports JSON and files).
@@ -91,7 +103,8 @@ curl -X PATCH \
      {{env.HOST}}/{{username}}/blog
 ```
 
-By default all endpoints are private, but you can modify a specific entry point to be public by default by changing the permissions:
+By default all endpoints are private, but you can modify a specific entry point
+to be public by default by changing the permissions:
 
 * PUT `/{{username}}/:path/_perms` make the `:path` public.
 * DELETE `/{{username}}/:path/_perms` make `:path` private.
@@ -101,7 +114,10 @@ Public endpoints accept `GET` requests without the `authorization` header.
 
 ## Notes on PATCH
 
-The `PATCH` method implements the JSON Merge Patch standard [(RFC 7396)](https://tools.ietf.org/html/rfc7396) when the target endpoint is an `object`. This means if you wish to remove a property from your store, a value of `null` is sent:
+The `PATCH` method implements the JSON Merge Patch standard
+[(RFC 7396)](https://tools.ietf.org/html/rfc7396) when the target endpoint is an
+`object`. This means if you wish to remove a property from your store, a value
+of `null` is sent:
 
 ```
 curl -X PATCH \
@@ -110,11 +126,15 @@ curl -X PATCH \
      {{env.HOST}}/{{username}}/blog
 ```
 
-The exception is that when the endpoint is an array, a `PATCH` will _always_ push onto the endpoint. If you need to reset the array you can `POST` to the endpoint, or you can `DELETE` an [individual array element](#example-with-arrays).
+The exception is that when the endpoint is an array, a `PATCH` will _always_
+push onto the endpoint. If you need to reset the array you can `POST` to the
+endpoint, or you can `DELETE` an
+[individual array element](#example-with-arrays).
 
 ## Example storing files
 
-You can use jsonbin as a shared clipboard across machines. Creating an alias to upload `STDIN` via `curl` could be posted to a public URL:
+You can use jsonbin as a shared clipboard across machines. Creating an alias to
+upload `STDIN` via `curl` could be posted to a public URL:
 
 ```
 alias jsonbin="curl -X 'POST' \
@@ -126,7 +146,8 @@ echo "foo" | jsonbin
 
 ## Example with arrays
 
-As well as objects, arrays are also supported. To delete an array element, it should be accessed using the index as per:
+As well as objects, arrays are also supported. To delete an array element, it
+should be accessed using the index as per:
 
 ```
 curl -X DELETE {{env.HOST}}/{{username}}/urls/1
@@ -141,12 +162,12 @@ curl -X PATCH {{env.HOST}}/{{username}}/urls \
 
 ## BUGS
 
-This project lives at [jsonbin](https://github.com/remy/jsonbin). Please report bugs to [jsonbin/issues](https://github.com/remy/jsonbin/issues).
+This project lives at [jsonbin](https://github.com/remy/jsonbin). Please report
+bugs to [jsonbin/issues](https://github.com/remy/jsonbin/issues).
 
 ## AUTHOR
 
-Remy Sharp &lt;[remy@leftlogic.com](mailto:remy@leftlogic.com)&gt;
-{{/marked}}
+Remy Sharp &lt;[remy@leftlogic.com](mailto:remy@leftlogic.com)&gt; {{/marked}}
 
 <ol class="man-decor man-foot man foot">
   <li class="tl"></li>

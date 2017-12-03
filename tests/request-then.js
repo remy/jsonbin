@@ -1,13 +1,15 @@
 const request = require('request');
 
-module.exports = function makeRequest (options) {
+module.exports = function makeRequest(options) {
   if (typeof options === 'string')
     options = {
       url: options,
-      method: 'GET'
+      method: 'GET',
     };
 
-  let curl = `curl -i -X ${(options.method || 'get').toUpperCase()} "${options.url}"`;
+  let curl = `curl -i -X ${(options.method || 'get').toUpperCase()} "${
+    options.url
+  }"`;
   const s = ' \\\n         ';
 
   if (options.headers) {
@@ -28,10 +30,8 @@ module.exports = function makeRequest (options) {
 
   return new Promise((resolve, reject) => {
     request(options, (error, response) => {
-      if (error)
-        reject(error);
-      else
-        resolve(response);
+      if (error) reject(error);
+      else resolve(response);
     });
   });
 };
