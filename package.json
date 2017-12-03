@@ -1,6 +1,6 @@
 {
   "name": "jsonbin",
-  "version": "2.5.3",
+  "version": "2.6.0",
   "description": "",
   "main": "lib/index.js",
   "private": true,
@@ -15,8 +15,7 @@
     "postversion": "now && now alias",
     "start": "NODE_ENV=dev PORT=3001 nodemon . -w lib",
     "pretest": "NODE_ENV=test PORT=7331 node . & echo $! > .pid; sleep 1;",
-    "test":
-      "NODE_ENV=test PORT=7331 tap tests/*.test.js -Rspec; kill $(cat .pid); rm .pid",
+    "test": "NODE_ENV=test PORT=7331 tap tests/*.test.js -Rspec; kill $(cat .pid); rm .pid",
     "deploy": "npm test && now && now alias"
   },
   "keywords": [],
