@@ -1,6 +1,6 @@
 {
   "name": "jsonbin",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "description": "",
   "main": "lib/index.js",
   "private": true,
@@ -46,7 +46,7 @@
     "on-headers": "^1.0.1",
     "passport": "^0.4.0",
     "passport-github2": "^0.1.10",
-    "request": "^2.83.0",
+    "request": "^2.87.0",
     "serve-favicon": "^2.3.2",
     "server-timings": "^1.0.4",
     "shortid": "^2.2.6",
