@@ -29,7 +29,7 @@ Headers:
   Content-Type: application/json
 
 [{
-  "something": "else",
+  "something": "else"
 }]
 
 # GET /me/demo
@@ -38,5 +38,5 @@ Headers:
 
 + expect
 [{
-  "something": "else",
+  "something": "else"
 }]

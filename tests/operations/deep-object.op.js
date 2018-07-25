@@ -21,7 +21,7 @@ Headers:
   Content-Type: application/json
 
 {
-  "l": "bird",
+  "l": "bird"
 }
 
 # GET /me/
