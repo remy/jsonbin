@@ -1,0 +1,23 @@
++name
+Security check
+
++ setup
+{
+  "foo": true
+}
+
+
+# POST /me 422
+Headers:
+  authorization: token ${token}
+  Content-Type: application/json
+
+{ id: `${JSON.stringify(process.env)}` }
+
+# GET /me
+Headers:
+  authorization: token ${token}
+  Content-Type: application/json
+
++ expect
+{ "foo": true }

@@ -22,12 +22,10 @@ module.exports = {
   op,
 };
 
-function request(user, {
-  method = 'get',
-  url = base,
-  body = {},
-  json = true,
-} = {}) {
+function request(
+  user,
+  { method = 'get', url = base, body = {}, json = true } = {}
+) {
   return _request({
     method,
     body,
@@ -42,12 +40,15 @@ function request(user, {
 }
 
 function setup(store = {}) {
-  return User.remove({ username: 'test'}).then(() => {
-    return User.findOrCreate({ githubId: 1, email: null }, {
-      login: 'test',
-      store,
-    });
-  })
+  return User.remove({ username: 'test' }).then(() => {
+    return User.findOrCreate(
+      { githubId: 1, email: null },
+      {
+        login: 'test',
+        store,
+      }
+    );
+  });
 }
 
 function updateUser({ publicId }) {
@@ -55,7 +56,7 @@ function updateUser({ publicId }) {
 }
 
 function teardown() {
-  return User.remove({ username: 'test'}).then(() => {
+  return User.remove({ username: 'test' }).then(() => {
     mongoose.connection.close();
   });
 }
@@ -74,11 +75,16 @@ function op(file) {
   for (let i = 0; i < lines.length; i++) {
     let line = lines[i].trim();
 
+    // new section (of name, setup, expect)
     if (line[0] === '+') {
       // slurp blank lines and the body
-      const type = line.trim().slice(1).trim();
+      let type = line
+        .trim()
+        .slice(1)
+        .trim()
+        .toLowerCase();
       i++;
-      while (line = lines[i].trim()) {
+      while ((line = lines[i].trim())) {
         config[type] += line;
         i++;
       }
@@ -89,28 +95,33 @@ function op(file) {
       continue;
     }
 
-    if (line.startsWith('//')) { // comment
+    if (line.startsWith('//')) {
+      // comment
       continue;
     }
 
     if (line.startsWith('# ')) {
       // TODO check last request is done
-      let [ , method, url ] = line.split(' ');
+      let [, method, url, status = null] = line.split(' ');
       index++;
       requests[index] = {
         method,
         url: root + url,
         headers: {},
         body: '',
-      }
+        status: status ? parseInt(status, 10) : null,
+      };
       continue;
     }
 
     if (line.toLowerCase() === 'headers:') {
       i++;
-      while (line = lines[i].trim()) {
+      while ((line = lines[i].trim())) {
         const parts = line.split(':');
-        requests[index].headers[parts[0].trim().toLowerCase()] = parts.slice(1).join(':').trim();
+        requests[index].headers[parts[0].trim().toLowerCase()] = parts
+          .slice(1)
+          .join(':')
+          .trim();
         i++;
       }
       continue;
@@ -122,5 +133,10 @@ function op(file) {
   const setup = new Function('return ' + (config.setup || 'null'))();
   const expect = new Function('return ' + (config.expect || 'null'))();
 
-  return { name: config.name, setup, expect, op: requests };
+  return {
+    name: config.name,
+    setup,
+    expect,
+    op: requests,
+  };
 }
