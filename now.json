@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "name": "express",
+  "builds": [
+    {
+      "src": "lib/index.js",
+      "use": "@now/node-server",
+      "config": { "maxLambdaSize": "40mb" }
+    },
+    { "src": "public/**", "use": "@now/static" }
+  ],
+  "routes": [
+    { "src": "/_/([^.]*).(ico|png|css|jpg)", "dest": "/public/$1.$2" },
+    { "src": "/(.*)", "dest": "/lib/index.js" }
+  ]
+}
