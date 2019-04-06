@@ -1,6 +1,7 @@
 {
   "version": 2,
   "name": "express",
+  "alias": ["jsonbin-now2"],
   "builds": [
     {
       "src": "lib/index.js",
@@ -12,5 +13,16 @@
   "routes": [
     { "src": "/_/([^.]*).(ico|png|css|jpg)", "dest": "/public/$1.$2" },
     { "src": "/(.*)", "dest": "/lib/index.js" }
-  ]
+  ],
+  "env": {
+    "MONGO_URL": "@JSONBIN_MONGO_URL",
+    "HOST": "https://jsonbin-now2.now.sh",
+    "GITHUB_CALLBACK": "",
+    "GITHUB_CLIENT_ID": "@JSONBIN_GH_CLIENT_ID",
+    "GITHUB_SECRET": "@JSONBIN_GH_CLIENT_ID",
+    "SESSION_SECRET": "@JSONBIN_SESSION_SECRET",
+    "LOGGLY_DOMAIN": "@JSONBIN_LOGGLY_DOMAIN",
+    "LOGGLY_TOKEN": "@JSONBIN_LOGGLY_TOKEN",
+    "ANALYTICS": "@JSONBIN_ANALYTICS",
+  }
 }
