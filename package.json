@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "private": true,
   "engines": {
-    "node": ">=8.x"
+    "node": "8.x"
   },
   "now": {
     "alias": "jsonbin.org",
@@ -18,18 +18,18 @@
     "postversion": "now && now alias",
     "start": "NODE_ENV=dev PORT=3001 nodemon . -w lib",
     "pretest": "NODE_ENV=test PORT=7331 node . & echo $! > .pid; sleep 1;",
-    "test":
-      "NODE_ENV=test PORT=7331 tap tests/*.test.js -Rspec; kill $(cat .pid); rm .pid",
-    "deploy": "npm test && now && now alias"
+    "test": "NODE_ENV=test PORT=7331 tap tests/*.test.js -Rspec; kill $(cat .pid); rm .pid",
+    "deploy": "now -b NODE_ENV=production $(awk '{ sub(/#.*$/, \"\") } !/^\\s*$/ { printf(\"-e %s \", $0)}' .env.production) --regions lhr"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "8fold-marked": "^0.3.9",
     "body-parser": "^1.15.2",
     "compression": "^1.6.2",
     "connect-mongo": "^2.0.0",
+    "cookie": "^0.4.0",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.1",
     "dotenv": "^4.0.0",
@@ -42,24 +42,25 @@
     "json-merge-patch": "^0.2.3",
     "json5": "^1.0.1",
     "jsondiffpatch": "^0.2.4",
-    "jsonwebtoken": "^8.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash.get": "^4.4.2",
     "moment": "^2.19.3",
-    "mongoose": "^4.13.6",
+    "mongoose": "^5.6.1",
     "morgan": "^1.7.0",
     "ms": "^2.1.1",
     "multer": "^1.2.1",
     "on-headers": "^1.0.1",
     "passport": "^0.4.0",
-    "passport-github2": "^0.1.10",
-    "request": "^2.87.0",
+    "passport-github2": "^0.1.11",
+    "request": "^2.88.0",
     "serve-favicon": "^2.3.2",
     "server-timings": "^1.0.4",
-    "shortid": "^2.2.6",
+    "shortid": "^2.2.14",
     "undefsafe": "^2.0.1",
     "universal-analytics": "^0.4.16",
-    "uuid": "^3.0.1"
+    "uuid": "^3.3.2"
   },
-  "devDependencies": {
+  "_devDependencies": {
     "@remy/eslint": "^1.3.0",
     "proxyquire": "^1.7.10",
     "sinon": "^4.1.2",

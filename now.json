@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "/public/**", "use": "@now/static" },
+    { "src": "/lib/routes/help.js", "use": "@now/node" },
+    { "src": "/lib/routes/version.js", "use": "@now/node" },
+    { "src": "/lib/routes/auth/*", "use": "@now/node" }
+  ],
+  "routes": [
+    { "src": "/_/css/(.*)", "dest": "/public/css/$1" },
+    { "src": "/_/img/(.*)", "dest": "/public/img/$1" },
+    {
+      "src": "/_/?(help|man|)",
+      "status": 301,
+      "headers": { "Location": "/" }
+    },
+    {
+      "src": "/_/login",
+      "status": 301,
+      "headers": { "Location": "/_/auth/github" }
+    },
+    { "src": "/", "dest": "/lib/routes/help.js" },
+    { "src": "/_/auth/github/?.*", "dest": "/lib/routes/auth/github.js" },
+    { "src": "/_/version", "dest": "/lib/routes/version.js" }
+  ]
+}
