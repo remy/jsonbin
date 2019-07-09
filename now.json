@@ -5,8 +5,8 @@
   "builds": [
     {
       "src": "lib/index.js",
-      "use": "@now/node-server",
-      "config": { "maxLambdaSize": "40mb" }
+      "use": "@now/node@canary",
+      "config": { "maxLambdaSize": "50mb" }
     },
     { "src": "public/**", "use": "@now/static" }
   ],
