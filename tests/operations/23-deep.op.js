@@ -17,7 +17,7 @@ Headers:
   Content-Type: application/json
 
 {
-  "zoo": true,
+  "zoo": true
 }
 
 # GET /me/urls/foo

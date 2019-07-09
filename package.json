@@ -1,9 +1,12 @@
 {
   "name": "jsonbin",
-  "version": "2.6.0",
+  "version": "2.6.3",
   "description": "",
   "main": "lib/index.js",
   "private": true,
+  "engines": {
+    "node": ">=8.x"
+  },
   "now": {
     "alias": "jsonbin.org",
     "env": {
@@ -36,6 +39,7 @@
     "http-status-codes": "^1.0.6",
     "inline-log": "^1.0.4",
     "json-merge-patch": "^0.2.3",
+    "json5": "^1.0.1",
     "jsondiffpatch": "^0.2.4",
     "jsonwebtoken": "^8.1.0",
     "moment": "^2.19.3",
@@ -46,7 +50,7 @@
     "on-headers": "^1.0.1",
     "passport": "^0.4.0",
     "passport-github2": "^0.1.10",
-    "request": "^2.83.0",
+    "request": "^2.87.0",
     "serve-favicon": "^2.3.2",
     "server-timings": "^1.0.4",
     "shortid": "^2.2.6",

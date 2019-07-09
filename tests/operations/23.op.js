@@ -38,5 +38,5 @@ Headers:
 
 + expect
 [{
-  "something": "else",
+  "something": "else"
 }]

@@ -15,12 +15,14 @@ function getHeaders(type) {
   }
 
   return h;
-};
+}
 
 test('load user', t => {
   return setup({
-    urls: ['foo.com']
-  }).then(u => user = u).then(() => t.pass('user loaded'));
+    urls: ['foo.com'],
+  })
+    .then(u => (user = u))
+    .then(() => t.pass('user loaded'));
 });
 
 tap.tearDown(() => {
@@ -30,13 +32,16 @@ tap.tearDown(() => {
 // reset the user store
 tap.afterEach(done => {
   user.store = {
-    urls: ['foo.com']
+    urls: ['foo.com'],
   };
   user.dirty();
-  user.save().then(() => done()).catch(e => {
-    console.log(e.stack);
-    done(e);
-  });
+  user
+    .save()
+    .then(() => done())
+    .catch(e => {
+      console.log(e.stack);
+      done(e);
+    });
 });
 
 test(`json (error) 'bar.com'`, t => {
@@ -45,17 +50,15 @@ test(`json (error) 'bar.com'`, t => {
     method: 'PATCH',
     body: 'bar.com',
     headers: getHeaders('application/json'),
-  }).then((res) => {
-    t.equal(res.statusCode, 400, 'errors when invalid json sent');
+  }).then(res => {
+    t.equal(res.statusCode, 422, 'errors when invalid json sent');
 
     return request({
       url,
       json: true,
-      headers: getHeaders('text/plain')
+      headers: getHeaders('text/plain'),
     }).then(res => {
-      t.deepEqual(res.body, [
-        'foo.com',
-      ], 'body remained unchanged');
+      t.deepEqual(res.body, ['foo.com'], 'body remained unchanged');
     });
   });
 });
