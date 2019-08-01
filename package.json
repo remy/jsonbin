@@ -9,9 +9,7 @@
   },
   "now": {
     "alias": "jsonbin.org",
-    "env": {
-      "NODE_ENV": "production"
-    }
+    "dotenv": ".env.production"
   },
   "scripts": {
     "now-start": "node .",
