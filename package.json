@@ -24,6 +24,7 @@
   "license": "ISC",
   "dependencies": {
     "8fold-marked": "^0.3.9",
+    "@remy/envy": "^4.0.2",
     "body-parser": "^1.15.2",
     "compression": "^1.6.2",
     "connect-mongo": "^2.0.0",
