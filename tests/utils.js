@@ -40,7 +40,7 @@ function request(
 }
 
 function setup(store = {}) {
-  return User.remove({ username: 'test' }).then(() => {
+  return User.deleteOne({ username: 'test' }).then(() => {
     return User.findOrCreate(
       { githubId: 1, email: null },
       {
@@ -56,7 +56,7 @@ function updateUser({ publicId }) {
 }
 
 function teardown() {
-  return User.remove({ username: 'test' }).then(() => {
+  return User.deleteOne({ username: 'test' }).then(() => {
     mongoose.connection.close();
   });
 }
