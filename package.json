@@ -5,11 +5,13 @@
   "main": "lib/index.js",
   "private": true,
   "engines": {
-    "node": "18.x"
+    "node": ">=12.x"
   },
   "now": {
     "alias": "jsonbin.org",
-    "dotenv": ".env.production"
+    "env": {
+      "NODE_ENV": "production"
+    }
   },
   "scripts": {
     "start": "node .",
@@ -24,14 +26,13 @@
   "license": "ISC",
   "dependencies": {
     "8fold-marked": "^0.3.9",
-    "@remy/envy": "^4.0.2",
     "body-parser": "^1.15.2",
     "compression": "^1.6.2",
     "connect-mongo": "^2.0.0",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.1",
-    "dotenv": "^4.0.0",
-    "express": "^4.14.0",
+    "renvy": "*",
+    "express": "*",
     "express-hbs": "^1.0.3",
     "express-session": "^1.14.2",
     "file-type": "^7.4.0",
@@ -42,7 +43,7 @@
     "jsondiffpatch": "^0.2.4",
     "jsonwebtoken": "^8.1.0",
     "moment": "^2.19.3",
-    "mongoose": "^4.13.6",
+    "mongoose": "^5.10.6",
     "morgan": "^1.7.0",
     "ms": "^2.1.1",
     "multer": "^1.2.1",
@@ -53,7 +54,7 @@
     "serve-favicon": "^2.3.2",
     "server-timings": "^1.0.4",
     "shortid": "^2.2.6",
-    "undefsafe": "^2.0.1",
+    "undefsafe": "^2.0.3",
     "universal-analytics": "^0.4.16",
     "uuid": "^3.0.1"
   },
