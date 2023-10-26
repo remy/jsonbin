@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "private": true,
   "engines": {
-    "node": "20.x"
+    "node": "20.x",
+    "npm": "9.x"
   },
   "scripts": {
     "start": "node .",
